@@ -1,0 +1,67 @@
+/* Base styles */
+:root {
+  --bg-dark: #1a1a1a;   /* softer than pure black */
+  --text-light: #f2f2f2; /* softer than pure white */
+}
+
+body {
+  margin: 0;
+  font-family: Helvetica, Arial, sans-serif;
+  background-color: var(--bg-dark);
+  color: var(--text-light);
+}
+
+/* Navbar */
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2vw;
+}
+
+.nav-left {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.nav-right a {
+  margin-left: 2rem;
+  text-decoration: none;
+  color: var(--text-light);
+  font-size: 1rem;
+  transition: opacity 0.2s ease;
+}
+
+.nav-right a:hover {
+  opacity: 0.7;
+}
+
+/* Hero */
+.hero {
+  text-align: center;
+  margin: 5rem 2vw 2rem 2vw;
+}
+
+.hero-title {
+  font-size: clamp(3rem, 12vw, 8rem);
+  font-weight: bold;
+  margin: 0;
+}
+
+.hero-subtitle {
+  margin-top: 1rem;
+  text-align: left;
+  font-size: clamp(1rem, 2vw, 1.5rem);
+  max-width: 600px;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 2rem 0;
+  font-family: 'Sono', monospace;
+  font-size: 0.9rem;
+  border-top: 1px solid #333;
+  margin-top: 4rem;
+  letter-spacing: -0.05rem; /* tighter tracking */
+}
