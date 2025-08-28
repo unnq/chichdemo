@@ -60,26 +60,25 @@ nav {
 
 .btn {
   padding: 0.75rem 1.5rem;
-  border-radius: 6px;
+  border-radius: 2px;
   font-size: 1rem;
   text-decoration: none;
   font-family: inherit;
   transition: opacity 0.2s ease;
+  opacity: 0.6;
 }
 
 .btn:hover {
-  opacity: 0.8;
+  opacity: 0.2;
 }
 
 .btn-magenta {
   background-color: var(--accent-magenta);
-  border: 1px solid rgba(139, 0, 139, 0.8);
   color: var(--text-light);
 }
 
 .btn-light {
   background-color: var(--accent-grey);
-  border: 1px solid rgba(242, 242, 242, 0.4);
   color: var(--text-light);
 }
 
