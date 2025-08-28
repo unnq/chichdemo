@@ -4,6 +4,7 @@
   --text-light: #f2f2f2; /* softer than pure white */
   --accent-magenta: rgba(139, 0, 139, 0.6); /* dark magenta, semi-transparent */
   --accent-grey: rgba(242, 242, 242, 0.2); /* light grey transparent */
+  --nav-h: 72px; /* fixed nav height so hero = 100vh - nav */
 }
 
 body {
@@ -18,6 +19,7 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  min-height: var(--nav-h);   /* predictable height for layout math */
   padding: 1rem 2vw;
 }
 
@@ -41,7 +43,7 @@ nav {
 /* Hero */
 .hero {
   position: relative;
-  min-height: 100vh;
+  min-height: calc(100vh - var(--nav-h)); /* keep scroll indicator visible */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -54,7 +56,7 @@ nav {
 .hero-buttons {
   width: 100%;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-around; /* per request */
   margin-bottom: 2rem;
 }
 
@@ -84,9 +86,12 @@ nav {
 
 /* Hero Title */
 .hero-title {
-  font-size: clamp(3rem, 12vw, 8rem);
+  white-space: nowrap;                 /* never wrap; shrink instead */
   font-weight: bold;
   margin: 0;
+  font-size: clamp(2.4rem, 9.8vw, 16rem); /* spans width responsively */
+  line-height: 0.88;                   /* slightly squished vertical look */
+  letter-spacing: -0.03em;             /* subtle modern squeeze */
 }
 
 .hero-subtitle {
