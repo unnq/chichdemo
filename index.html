@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Sentiments</title>
   <!-- Sono font for footer -->
   <link href="https://fonts.googleapis.com/css2?family=Sono:wght@400;600&display=swap" rel="stylesheet">
@@ -31,8 +31,14 @@
 
   <!-- Footer -->
   <footer>
-    sentiments
+    <div class="footer-left">sentiments</div>
+    <div class="footer-center"></div>
+    <div class="footer-right">
+      <span id="datetime"></span>
+    </div>
   </footer>
 
+  <!-- Live CA time (separate file, no HTML bloat) -->
+  <script src="js/datetime.js" defer></script>
 </body>
 </html>
