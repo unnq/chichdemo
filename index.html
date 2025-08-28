@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Sentiments</title>
-  <!-- Sono font for footer -->
+  <!-- Sono font for footer + scroll indicator -->
   <link href="https://fonts.googleapis.com/css2?family=Sono:wght@400;600&display=swap" rel="stylesheet">
   <!-- Stylesheet -->
   <link rel="stylesheet" href="css/styles.css">
@@ -23,10 +23,21 @@
 
   <!-- Hero -->
   <section class="hero">
+    <div class="hero-buttons">
+      <a href="#" class="btn btn-magenta">See what we do↲</a>
+      <a href="#" class="btn btn-light">Send an Inquiry↲</a>
+    </div>
+
     <h1 class="hero-title">sentiments</h1>
     <p class="hero-subtitle">
       We craft bold, minimal campaigns that resonate deeply. (Placeholder text)
     </p>
+
+    <div class="scroll-indicator">
+      <span class="asterisk-left">*</span>
+      <span class="scroll-text">Scroll to explore</span>
+      <span class="asterisk-right">*</span>
+    </div>
   </section>
 
   <!-- Footer -->
@@ -38,7 +49,7 @@
     </div>
   </footer>
 
-  <!-- Live CA time (separate file, no HTML bloat) -->
+  <!-- Live CA time -->
   <script src="js/datetime.js" defer></script>
 </body>
 </html>
