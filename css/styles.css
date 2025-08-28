@@ -2,6 +2,8 @@
 :root {
   --bg-dark: #1a1a1a;    /* softer than pure black */
   --text-light: #f2f2f2; /* softer than pure white */
+  --accent-magenta: rgba(139, 0, 139, 0.6); /* dark magenta, semi-transparent */
+  --accent-grey: rgba(242, 242, 242, 0.2); /* light grey transparent */
 }
 
 body {
@@ -38,10 +40,50 @@ nav {
 
 /* Hero */
 .hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 2vw;
   text-align: center;
-  margin: 5rem 2vw 2rem 2vw;
 }
 
+/* Hero Buttons */
+.hero-buttons {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  text-decoration: none;
+  font-family: inherit;
+  transition: opacity 0.2s ease;
+}
+
+.btn:hover {
+  opacity: 0.8;
+}
+
+.btn-magenta {
+  background-color: var(--accent-magenta);
+  border: 1px solid rgba(139, 0, 139, 0.8);
+  color: var(--text-light);
+}
+
+.btn-light {
+  background-color: var(--accent-grey);
+  border: 1px solid rgba(242, 242, 242, 0.4);
+  color: var(--text-light);
+}
+
+/* Hero Title */
 .hero-title {
   font-size: clamp(3rem, 12vw, 8rem);
   font-weight: bold;
@@ -53,6 +95,29 @@ nav {
   text-align: left;
   font-size: clamp(1rem, 2vw, 1.5rem);
   max-width: 600px;
+}
+
+/* Scroll Indicator */
+.scroll-indicator {
+  position: absolute;
+  bottom: 1.5rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Sono', monospace;
+  font-size: 0.85rem;
+  letter-spacing: -0.05rem;
+}
+
+.scroll-text {
+  text-align: center;
+  flex: 1;
+}
+
+.asterisk-left,
+.asterisk-right {
+  font-weight: 600;
 }
 
 /* Footer */
@@ -68,7 +133,7 @@ footer {
 }
 
 footer .footer-left {
-  letter-spacing: -0.05rem; /* tighter tracking */
+  letter-spacing: -0.05rem;
 }
 
 footer .footer-center {
