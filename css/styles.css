@@ -154,6 +154,7 @@ nav {
   white-space: nowrap;                  /* never wrap; shrink instead */
   font-weight: bold;
   margin: 0;
+  font-family: Helvetica;
   font-size: 15vw;                      /* spans viewport width visually */
   line-height: 0.88;                    /* slightly squished vertical look */
   letter-spacing: -0.03em;              /* modern squeeze */
