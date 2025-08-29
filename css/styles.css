@@ -248,7 +248,7 @@ footer .footer-right { text-align: right; }
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent; /* make the glyphs the mask */
     background-repeat: repeat;
-    background-size: 128px 128px;         /* scale the tile */
+    background-size: 160px 160px;         /* scale the tile */
     animation: noiseShift 0.15s steps(6) infinite;
     color: transparent;                    /* ensure text isn't double-tinted */
   }
