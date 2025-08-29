@@ -13,7 +13,7 @@
 
 body {
   margin: 0;
-  font-family: Montserrat, Helvetica, Arial, sans-serif;
+  font-family: "Montserrat", Helvetica, Arial, sans-serif;
   background-color: var(--bg-dark);
   color: var(--text-light);
   -webkit-font-smoothing: antialiased;
