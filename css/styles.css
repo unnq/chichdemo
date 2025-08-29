@@ -198,8 +198,9 @@ nav {
    Mobile Menu
    ========================= */
 
-/* Reuse nav-link styling for the "Menu" toggle */
+/* Desktop default: hide the mobile menu toggle */
 .nav-menu-toggle {
+  display: none;               /* hide on desktop */
   appearance: none;
   background: none;
   border: 0;
