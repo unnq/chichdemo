@@ -13,7 +13,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
   /** Config (tweak as needed) */
   const MODEL_URL     = new URL('../assets/logo.glb', import.meta.url).href;
   const CAMERA_Z      = 6;
-  const TARGET_SIZE   = 1.3;   // overall model size (lower => smaller)
+  const TARGET_SIZE   = 1.55;   // overall model size (lower => smaller)
   const INITIAL_SPEED = 0.005;
   const HOVER_SPEED   = 0.018;
   const LERP_FACTOR   = 0.08;  // easing toward target speed
