@@ -253,7 +253,7 @@ footer .footer-right { text-align: right; }
     -webkit-text-fill-color: transparent;  /* glyphs become the mask */
     background-repeat: repeat;
     background-size: 160px 160px;          /* matches 160×160 tile from JS */
-    animation: noiseShift 0.45s steps(6) infinite;
+    animation: noiseShift 0.15s steps(6) infinite;
   }
 }
 
