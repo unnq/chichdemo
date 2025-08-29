@@ -11,7 +11,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
   }
 
   /** ===== Config ===== */
-  const MODEL_URL    = null;   // e.g. '/assets/logo.glb' when you have one
+  const MODEL_URL    = /assets/logo.glb;   // e.g. '/assets/logo.glb' when you have one
   const CAMERA_Z     = 6;
   const INITIAL_SPEED= 0.005;
   const HOVER_SPEED  = 0.018;
