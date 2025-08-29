@@ -128,12 +128,44 @@ nav {
 .hero-buttons {
   width: 100%;
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
-  gap: 0.75rem;
-  margin-top: auto;
-  margin-bottom: auto;
+  justify-content: space-between;                 /* split layout */
+  align-items: flex-start;
+  gap: clamp(1rem, 4vw, 3rem);
+  margin-top: 0;                                  /* keep hero height tidy */
+  margin-bottom: 1.25rem;
+}
+
+/* Button stays compact on the left */
+.hero-buttons .btn {
+  flex: 0 0 auto;
+}
+
+/* Subtitle lives on the right, readable width, no extra margins */
+.hero-buttons .hero-subtitle {
+  order: 2;                                       /* ensure it sits to the right on desktop */
+  flex: 1 1 520px;
+  max-width: min(44ch, 60%);
+  margin: 0;
+  text-align: left;
+  font-size: clamp(1rem, 1.8vw, 1.4rem);
+  line-height: 1.5;
+}
+
+/* Keep the primary CTA first on mobile; stack neatly */
+@media (max-width: 700px) {
+  .hero-buttons {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+  .hero-buttons .btn {
+    order: 1;
+    align-self: flex-start;                       /* left-align tap target */
+  }
+  .hero-buttons .hero-subtitle {
+    order: 2;
+    max-width: 100%;
+  }
 }
 
 .btn {
