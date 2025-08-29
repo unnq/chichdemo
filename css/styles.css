@@ -124,7 +124,8 @@ nav {
 }
 
 .btn {
-  padding: 2.2rem 3.6667rem;
+  padding-block: clamp(0.9rem, 1.8vw, 2.2rem);
+  padding-inline: clamp(1.2rem, 4.5vw, 3.75rem);
   border-radius: 1px;                  /* per request: 1px radius everywhere */
   font-size: 1rem;
   text-decoration: none;
