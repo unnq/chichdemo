@@ -1,7 +1,3 @@
-// Single-model version
-// Requires an import map in index.html that maps "three" and "three/addons/".
-// (If you don't want an import map, see note at the bottom.)
-
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
@@ -13,10 +9,10 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
     return;
   }
 
-  /** ===== Config (tweak as needed) ===== */
+  /** ===== Config ===== */
   const MODEL_URL     = new URL('../assets/logo.glb', import.meta.url).href;
   const CAMERA_Z      = 6;
-  const TARGET_SIZE   = 1.8;   // overall model size (lower = smaller)
+  const TARGET_SIZE   = 1.8;
   const INITIAL_SPEED = 0.005;
   const HOVER_SPEED   = 0.018;
   const LERP_FACTOR   = 0.08;
@@ -26,7 +22,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
   let targetSpeed    = reduceMotion ? 0 : INITIAL_SPEED;
   let currentSpeed   = targetSpeed;
 
-  // Scene setup
+  // Scene / camera / renderer
   const scene  = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 100);
   camera.position.set(0, 0, CAMERA_Z);
@@ -41,6 +37,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
   dir.position.set(2, 3, 4);
   scene.add(dir);
 
+  // Model
   let model;
 
   function fitToFrame(object, targetSize = TARGET_SIZE) {
@@ -53,7 +50,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
     const center = new THREE.Vector3();
     box.getCenter(center);
-    object.position.sub(center.multiplyScalar(scale)); // recenter to origin
+    object.position.sub(center.multiplyScalar(scale));
   }
 
   async function loadModel() {
@@ -73,6 +70,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
     scene.add(model);
   }
 
+  // Size / resize
   function onResize() {
     const w = container.clientWidth || 1;
     const h = container.clientHeight || 1;
@@ -80,25 +78,52 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
     camera.updateProjectionMatrix();
     renderer.setSize(w, h, false); // CSS controls canvas size
   }
+  const ro = new ResizeObserver(onResize);
+  ro.observe(container);
 
-  function animate() {
-    currentSpeed += (targetSpeed - currentSpeed) * LERP_FACTOR;
-    if (model && !reduceMotion) model.rotation.y += currentSpeed;
-    renderer.render(scene, camera);
-    requestAnimationFrame(animate);
+  // ===== Raycaster hover only-when-over-model =====
+  const raycaster = new THREE.Raycaster();
+  const pointer = new THREE.Vector2(2, 2); // start outside (-1..1) so no hover until first move
+  let pointerInside = false;
+
+  function updatePointer(e) {
+    const rect = container.getBoundingClientRect();
+    pointer.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+    pointer.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+    pointerInside =
+      e.clientX >= rect.left && e.clientX <= rect.right &&
+      e.clientY >= rect.top  && e.clientY <= rect.bottom;
   }
 
-  // Hover/touch speed-up on the hero region
-  hero.addEventListener('mouseenter', () => { if (!reduceMotion) targetSpeed = HOVER_SPEED; });
-  hero.addEventListener('mouseleave', () => { if (!reduceMotion) targetSpeed = INITIAL_SPEED; });
-  hero.addEventListener('pointerdown',   () => {
+  // Track pointer anywhere over the hero (events bubble through children)
+  hero.addEventListener('pointermove', updatePointer);
+  hero.addEventListener('pointerleave', () => { pointerInside = false; });
+
+  // Touch “bump” stays the same
+  hero.addEventListener('pointerdown', () => {
     if (reduceMotion) return;
     targetSpeed = HOVER_SPEED;
     setTimeout(() => { targetSpeed = INITIAL_SPEED; }, 1200);
   });
 
-  const ro = new ResizeObserver(onResize);
-  ro.observe(container);
+  function animate() {
+    // Decide desired speed based on raycast hit
+    if (!reduceMotion && model && pointerInside) {
+      raycaster.setFromCamera(pointer, camera);
+      const hit = raycaster.intersectObject(model, true).length > 0;
+      targetSpeed = hit ? HOVER_SPEED : INITIAL_SPEED;
+    } else {
+      targetSpeed = reduceMotion ? 0 : INITIAL_SPEED;
+    }
 
+    // Ease speed and rotate
+    currentSpeed += (targetSpeed - currentSpeed) * LERP_FACTOR;
+    if (model && !reduceMotion) model.rotation.y += currentSpeed;
+
+    renderer.render(scene, camera);
+    requestAnimationFrame(animate);
+  }
+
+  // Go
   loadModel().then(() => { onResize(); animate(); });
 })();
