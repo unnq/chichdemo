@@ -231,33 +231,36 @@ footer .footer-right { text-align: right; }
   .hero { padding-top: 2.5rem; }
 }
 
-/* Noise masked into the hero title text */
+/* =========================
+   Noise masked into NAV LEFT text
+   ========================= */
+
+/* Keyframes to shift the noise (used by nav-left text fill) */
 @keyframes noiseShift {
   from { background-position: 0 0; }
   to   { background-position: 100% 0; }
 }
 
-/* Default readable color (fallback if background-clip isn't supported) */
-.hero-title {
+/* Fallback: keep normal color if clipping isn't supported */
+.nav-left {
   color: var(--text-light);
 }
 
 /* Safari/WebKit support */
 @supports (-webkit-background-clip: text) {
-  .hero-title {
+  .nav-left {
     -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent; /* make the glyphs the mask */
+    -webkit-text-fill-color: transparent;  /* glyphs become the mask */
     background-repeat: repeat;
-    background-size: 160px 160px;         /* scale the tile */
-    animation: noiseShift 0.15s steps(6) infinite;
-    color: transparent;                    /* ensure text isn't double-tinted */
+    background-size: 160px 160px;          /* matches 160×160 tile from JS */
+    animation: noiseShift 0.45s steps(6) infinite;
   }
 }
 
 /* Other modern browsers */
 @supports (background-clip: text) {
-  .hero-title {
+  .nav-left {
     background-clip: text;
-    color: transparent;
+    color: transparent;                     /* ensure no double tint */
   }
 }
