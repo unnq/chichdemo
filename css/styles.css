@@ -128,10 +128,10 @@ nav {
 .hero-buttons {
   width: 100%;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     gap: clamp(1rem, 4vw, 3rem);
-    margin-top: auto;
+    margin-top: 5vh;
     margin-bottom: auto;
 }
 
