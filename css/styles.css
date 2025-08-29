@@ -93,10 +93,6 @@ nav {
   justify-content: center;
   margin: 0 2vw;
   text-align: center;
-
-  /* breathing room for top tagline + reserved space for indicator */
-  padding-top: 2.75rem;
-  padding-bottom: calc(2.25rem + env(safe-area-inset-bottom, 0px));
   box-sizing: border-box;
 }
 
