@@ -80,8 +80,12 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
   function onResize() {
     const w = container.clientWidth || 1;
     const h = container.clientHeight || 1;
-    camera.aspect = w / h;
-    camera.updateProjectionMatrix();
+
+    // Keep CSS size in lockstep with the container
+    renderer.domElement.style.width = '100%';
+    renderer.domElement.style.height = '100%';
+
+    // Update the drawing buffer size (no need to also update CSS here)
     renderer.setSize(w, h, false);
   }
 
