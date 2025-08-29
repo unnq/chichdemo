@@ -77,18 +77,14 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
     scene.add(model);
   }
 
-  function onResize() {
+   function onResize() {
     const w = container.clientWidth || 1;
     const h = container.clientHeight || 1;
-
-    // Keep CSS size in lockstep with the container
-    renderer.domElement.style.width = '100%';
-    renderer.domElement.style.height = '100%';
-
-    // Update the drawing buffer size (no need to also update CSS here)
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
     renderer.setSize(w, h, false);
   }
-
+  
   function animate() {
     currentSpeed += (targetSpeed - currentSpeed) * LERP_FACTOR;
     if (model && !reduceMotion) model.rotation.y += currentSpeed;
