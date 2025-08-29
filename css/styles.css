@@ -127,12 +127,12 @@ nav {
 /* Hero Buttons */
 .hero-buttons {
   width: 100%;
-  display: flex;
-  justify-content: space-between;                 /* split layout */
-  align-items: flex-start;
-  gap: clamp(1rem, 4vw, 3rem);
-  margin-top: 2vh;
-  margin-bottom: auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: clamp(1rem, 4vw, 3rem);
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 /* Button stays compact on the left */
@@ -142,13 +142,14 @@ nav {
 
 /* Subtitle lives on the right, readable width, no extra margins */
 .hero-buttons .hero-subtitle {
-  order: 2;                                       /* ensure it sits to the right on desktop */
+  order: 2;
   flex: 1 1 520px;
-  max-width: min(44ch, 60%);
+  max-width: min(44ch, 30%);
   margin: 0;
+  font-weight: 600;
   text-align: left;
-  font-size: clamp(1rem, 1.8vw, 1.4rem);
-  line-height: 1.5;
+  font-size: clamp(1rem, 1.8vw, 4vw);
+  line-height: 1.3;
 }
 
 /* Keep the primary CTA first on mobile; stack neatly */
