@@ -2,11 +2,19 @@
 :root {
   --bg-dark: #1a1a1a;                 /* softer than pure black */
   --text-light: #f2f2f2;              /* softer than pure white */
-  --accent-magenta: rgba(139, 0, 139, 0.25);       /* transparent magenta */
-  --accent-magenta-hover: rgba(139, 0, 139, 0.38); /* more transparent on hover (appears darker on dark bg) */
-  --accent-grey: rgba(242, 242, 242, 0.10);        /* transparent light grey */
-  --accent-grey-hover: rgba(242, 242, 242, 0.18);  /* more transparent on hover (appears darker on dark bg) */
-  --nav-h: 4vh;                        /* sticky navbar height */
+
+  /* Buttons: darker on hover by lowering opacity */
+  --accent-magenta: rgba(139, 0, 139, 0.25);
+  --accent-magenta-hover: rgba(139, 0, 139, 0.15);
+  --accent-grey: rgba(242, 242, 242, 0.10);
+  --accent-grey-hover: rgba(242, 242, 242, 0.06);
+
+  --nav-h: 4vh;                        /* sticky navbar height (fallback) */
+}
+
+/* Use dynamic viewport height on modern browsers */
+@supports (height: 100dvh) {
+  :root { --nav-h: 4dvh; }
 }
 
 * { box-sizing: border-box; }
@@ -46,9 +54,9 @@ nav {
   display: inline-block;
   position: relative;
   padding: 0.35rem 0.5rem;    /* give the fill some area */
-  border-radius: 1px;         /* per request: 1px radius */
+  border-radius: 1px;         /* 1px radius */
   overflow: hidden;           /* clip the ::after fill */
-  z-index: 0;                 /* create a stacking context for ::after */
+  z-index: 0;                 /* stacking context for ::after */
   transition: color 0s;       /* no color change on hover */
 }
 
@@ -57,8 +65,8 @@ nav {
   position: absolute;
   left: 0; right: 0; bottom: 0;
   height: 0%;
-  background-color: var(--accent-grey); /* same as light grey button */
-  z-index: -1;                          /* behind the link text */
+  background-color: var(--accent-grey); /* same tone as light button */
+  z-index: -1;                          /* behind link text */
   transition: height 180ms ease;
 }
 
@@ -67,7 +75,7 @@ nav {
   height: 100%;                         /* fill from bottom up */
 }
 
-/* (Optional but accessible) focus ring */
+/* (Accessible) focus ring */
 .nav-right a:focus-visible {
   outline: 2px dashed rgba(255,255,255,0.35);
   outline-offset: 2px;
@@ -76,14 +84,25 @@ nav {
 /* Hero */
 .hero {
   position: relative;
-  min-height: 96vh;                    /* hero + sticky nav sum to 100vh */
+
+  /* Fixed height (not min-height) so it never exceeds viewport */
+  height: calc(100vh - var(--nav-h));           /* fallback */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   margin: 0 2vw;
   text-align: center;
-  padding-top: 2.75rem;                /* breathing room for top tagline */
+
+  /* breathing room for top tagline + reserved space for indicator */
+  padding-top: 2.75rem;
+  padding-bottom: calc(2.25rem + env(safe-area-inset-bottom, 0px));
+  box-sizing: border-box;
+}
+
+/* Use dynamic viewport height when supported */
+@supports (height: 100dvh) {
+  .hero { height: calc(100dvh - var(--nav-h)); }
 }
 
 /* Top-of-hero tagline */
@@ -101,38 +120,34 @@ nav {
   padding: 0 0.25rem;
 }
 
-.tagline-text {
-  text-align: center;
-  flex: 1;
-}
-
+.tagline-text { text-align: center; flex: 1; }
 .hero-tagline .asterisk-left,
-.hero-tagline .asterisk-right {
-  font-weight: 600;
-}
+.hero-tagline .asterisk-right { font-weight: 600; }
 
-/* Hero Buttons — centered & stacked */
+/* Hero Buttons */
 .hero-buttons {
   width: 100%;
   display: flex;
-  flex-direction: row;              /* row */
-  align-items: center;                  /* centered */
-  justify-content: space-around;              /* space around */
-  gap: 0.75rem;                         /* spacing between buttons */
-  margin-top: auto;
-  margin-bottom: auto;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  gap: 0.75rem;
+  margin-top: 0;                /* remove big push that caused overflow */
+  margin-bottom: 1.25rem;       /* small breathing room */
 }
 
 .btn {
+  /* Fluid padding with min/max guards */
   padding-block: clamp(0.9rem, 1.8vw, 2.2rem);
   padding-inline: clamp(1.2rem, 4.5vw, 3.75rem);
-  border-radius: 1px;                  /* per request: 1px radius everywhere */
+
+  border-radius: 1px;
   font-size: 1rem;
   text-decoration: none;
   font-family: inherit;
   border: none;
   outline: none;
-  color: var(--text-light);            /* text stays solid */
+  color: var(--text-light);         /* text stays solid */
   background-color: transparent;
   transition: background-color 160ms ease;
 }
@@ -147,21 +162,21 @@ nav {
 .hero-stack {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;              /* align subtitle to title's left */
+  align-items: flex-start;          /* align subtitle to title's left */
   width: 100%;
-  margin-bottom: auto;
+  margin-bottom: 0;                 /* let padding-bottom reserve space */
 }
 
 /* Hero Title */
 .hero-title {
-  white-space: nowrap;                  /* never wrap; shrink instead */
+  white-space: nowrap;              /* never wrap; shrink instead */
   font-weight: bold;
   margin: 0;
-  font-family: Helvetica;
-  font-size: 15vw;                      /* spans viewport width visually */
-  line-height: 0.88;                    /* slightly squished vertical look */
-  letter-spacing: -0.03em;              /* modern squeeze */
-  text-align: justify;                  /* requested (single line shows little effect) */
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 15vw;                  /* spans viewport width visually */
+  line-height: 0.88;                /* slightly squished vertical look */
+  letter-spacing: -0.03em;          /* modern squeeze */
+  text-align: justify;              /* (single line shows little effect) */
   text-align-last: justify;
 }
 
@@ -176,7 +191,7 @@ nav {
 /* Scroll Indicator (bottom of hero) */
 .scroll-indicator {
   position: absolute;
-  bottom: 1.5rem;
+  bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
   left: 0;
   right: 0;
   display: flex;
@@ -188,15 +203,9 @@ nav {
   padding: 0 0.25rem;
 }
 
-.scroll-text {
-  text-align: center;
-  flex: 1;
-}
-
+.scroll-text { text-align: center; flex: 1; }
 .asterisk-left,
-.asterisk-right {
-  font-weight: 600;
-}
+.asterisk-right { font-weight: 600; }
 
 /* =========================
    Mobile Menu
@@ -230,9 +239,7 @@ nav {
   transition: height 180ms ease;
 }
 .nav-menu-toggle:hover::after,
-.nav-menu-toggle:focus-visible::after {
-  height: 100%;
-}
+.nav-menu-toggle:focus-visible::after { height: 100%; }
 
 /* Show toggle on mobile, hide desktop links */
 @media (max-width: 900px) {
@@ -246,8 +253,8 @@ nav {
   top: var(--nav-h);
   left: 0;
   right: 0;
-  height: calc(100vh - var(--nav-h));
-  background: #111;                     /* slightly different than page bg */
+  height: calc(100vh - var(--nav-h));     /* fallback */
+  background: #111;                       /* slightly different than page bg */
   border-top: 1px solid #333;
   display: flex;
   flex-direction: column;
@@ -257,7 +264,11 @@ nav {
   opacity: 0;
   pointer-events: none;
   transition: transform 200ms ease, opacity 200ms ease;
-  z-index: 9;                           /* below sticky nav (z=10) */
+  z-index: 9;                             /* below sticky nav (z=10) */
+}
+
+@supports (height: 100dvh) {
+  .mobile-menu { height: calc(100dvh - var(--nav-h)); }
 }
 
 /* When opened */
@@ -267,7 +278,7 @@ nav {
   pointer-events: auto;
 }
 
-/* Links inside panel: reuse your nav-link styles + spacing */
+/* Links inside panel */
 .mobile-menu a {
   text-decoration: none;
   color: var(--text-light);
@@ -278,7 +289,7 @@ nav {
   overflow: hidden;
 }
 
-/* Keep the bottom-fill hover for panel links too */
+/* Bottom-fill hover for panel links too */
 .mobile-menu a::after {
   content: "";
   position: absolute;
@@ -289,22 +300,15 @@ nav {
   transition: height 180ms ease;
 }
 .mobile-menu a:hover::after,
-.mobile-menu a:focus-visible::after {
-  height: 100%;
-}
+.mobile-menu a:focus-visible::after { height: 100%; }
 
 /* Prevent background scroll when menu is open */
-body.menu-open {
-  overflow: hidden;
-}
+body.menu-open { overflow: hidden; }
 
 /* Reduced motion respect */
 @media (prefers-reduced-motion: reduce) {
-  .mobile-menu {
-    transition: none;
-  }
+  .mobile-menu { transition: none; }
 }
-
 
 /* Footer */
 footer {
@@ -334,11 +338,10 @@ footer .footer-right { text-align: right; }
 @media (max-width: 480px) {
   nav { padding: 0 4vw; }
   .nav-right a { margin-left: 0.9rem; font-size: 0.95rem; }
-
-  .btn { width: auto; }                /* keep buttons auto-width while stacked */
+  .btn { width: auto; }
 
   .hero-title { font-size: 14vw; }     /* tiny reduction to avoid edge collisions */
-  .scroll-indicator { font-size: 0.78rem; bottom: 1rem; }
+  .scroll-indicator { font-size: 0.78rem; bottom: calc(1rem + env(safe-area-inset-bottom, 0px)); }
   .hero-tagline { font-size: 0.74rem; top: 1rem; }
   .hero { padding-top: 2.5rem; }
 }
@@ -354,9 +357,7 @@ footer .footer-right { text-align: right; }
 }
 
 /* Fallback: keep normal color if clipping isn't supported */
-.nav-left {
-  color: var(--text-light);
-}
+.nav-left { color: var(--text-light); }
 
 /* Safari/WebKit support */
 @supports (-webkit-background-clip: text) {
