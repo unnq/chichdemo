@@ -10,7 +10,7 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
   const hero = document.querySelector('.hero');
   if (!container || !hero) return;
 
-  /** ===== Config ===== */
+  /** Config */
   const MODEL_URL     = new URL('../assets/logo.glb', import.meta.url).href;
   const CAMERA_Z      = 6;
   const TARGET_SIZE   = 1.8;
@@ -31,25 +31,23 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
 
   // Scene / camera / renderer
   const scene = new THREE.Scene();
-  scene.background = null;
+  scene.background = null; // transparent scene
 
   const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 100);
   camera.position.set(0, 0, CAMERA_Z);
 
   const renderer = new THREE.WebGLRenderer({
     antialias: true,
-    alpha: true,
+    alpha: true,               // <-- transparent canvas
     premultipliedAlpha: true
   });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, MAX_DPR));
-  renderer.setClearColor(0x000000, 0); // transparent
-  renderer.setClearAlpha(0);
-  // Optional color management (three r160+)
+  // Do NOT call setClearColor here; let passes clear with alpha 0.
   if ('outputColorSpace' in renderer) renderer.outputColorSpace = THREE.SRGBColorSpace;
 
   container.appendChild(renderer.domElement);
 
-  // 🔑 Transparent RGBA render target for the composer (keeps alpha)
+  // Transparent RGBA target for composer (keeps alpha)
   const renderTarget = new THREE.WebGLRenderTarget(1, 1, {
     format: THREE.RGBAFormat,
     type: THREE.UnsignedByteType,
@@ -59,10 +57,14 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
 
   // Post-processing
   const composer = new EffectComposer(renderer, renderTarget);
+  // Ensure both internal ping-pong targets are RGBA
+  composer.renderTarget1.texture.format = THREE.RGBAFormat;
+  composer.renderTarget2.texture.format = THREE.RGBAFormat;
+
   const renderPass = new RenderPass(scene, camera);
   renderPass.clear = true;
   renderPass.clearColor = new THREE.Color(0x000000);
-  renderPass.clearAlpha = 0; // 🔑 clear with alpha 0
+  renderPass.clearAlpha = 0; // <-- clear to transparent
   composer.addPass(renderPass);
 
   const bloomPass = new UnrealBloomPass(new THREE.Vector2(1, 1), BASE_BLOOM, BLOOM_RADIUS, BLOOM_THRESHOLD);
@@ -84,10 +86,9 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
     const maxDim = Math.max(size.x, size.y, size.z) || 1;
     const scale = targetSize / maxDim;
     object.scale.setScalar(scale);
-
     const center = new THREE.Vector3();
     box.getCenter(center);
-    object.position.sub(center.multiplyScalar(scale));
+    object.position.sub(center.multiplyScalar(scale)); // recenter to origin
   }
 
   async function loadModel() {
@@ -122,9 +123,8 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
     const h = container.clientHeight || 1;
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
-
     renderer.setSize(w, h, false);
-    renderTarget.setSize(w, h); // 🔑 keep RT in sync
+    renderTarget.setSize(w, h);
     composer.setSize(w, h);
     bloomPass.setSize(w, h);
   }
@@ -147,8 +147,6 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
 
   hero.addEventListener('pointermove', updatePointer);
   hero.addEventListener('pointerleave', () => { pointerInside = false; });
-
-  // Touch bump
   hero.addEventListener('pointerdown', () => {
     if (reduceMotion) return;
     targetSpeed = HOVER_SPEED;
