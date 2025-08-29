@@ -160,7 +160,6 @@ nav {
   }
   .hero-buttons .btn {
     order: 1;
-    align-self: flex-start;                       /* left-align tap target */
   }
   .hero-buttons .hero-subtitle {
     order: 2;
