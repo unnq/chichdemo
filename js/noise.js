@@ -1,6 +1,6 @@
 // js/noise.js
 (function () {
-  const SIZE = 64; // noise tile size (px)
+  const SIZE = 32; // noise tile size (px)
 
   // Build a tiny grayscale noise tile
   const c = document.createElement('canvas');
