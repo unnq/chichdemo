@@ -13,13 +13,28 @@
 
   <!-- Navbar -->
   <nav>
-    <div class="nav-left">sentiments</div>
-    <div class="nav-right">
-      <a href="#">Services</a>
-      <a href="#">Client Work</a>
-      <a href="#">Contact</a>
-    </div>
-  </nav>
+  <div class="nav-left">sentiments</div>
+  <div class="nav-right">
+    <a href="#">Services</a>
+    <a href="#">Client Work</a>
+    <a href="#">Contact</a>
+
+    <!-- Mobile menu toggle (hidden on desktop) -->
+    <button class="nav-menu-toggle" type="button"
+            aria-controls="mobile-menu"
+            aria-expanded="false">
+      Menu
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile menu panel (hidden by default) -->
+<div id="mobile-menu" class="mobile-menu" hidden>
+  <a href="#">Services</a>
+  <a href="#">Client Work</a>
+  <a href="#">Contact</a>
+</div>
+
 
   <!-- Hero -->
   <section class="hero">
