@@ -164,7 +164,6 @@ nav {
   flex-direction: column;
   align-items: flex-start;          /* align subtitle to title's left */
   width: 100%;
-  margin-bottom: auto;                 /* let padding-bottom reserve space */
 }
 
 /* Hero Title */
