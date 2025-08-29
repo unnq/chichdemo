@@ -164,11 +164,7 @@ nav {
   display: block;
 }
 
-/* Keep all other hero children above the canvas */
-.hero > *:not(.hero-3d) {
-  position: relative;
-  z-index: 1;
-}
+
 
 /* Keep the primary CTA first on mobile; stack neatly */
 @media (max-width: 700px) {
