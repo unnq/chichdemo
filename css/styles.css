@@ -143,7 +143,6 @@ nav {
 /* Subtitle lives on the right, readable width, no extra margins */
 .hero-buttons .hero-subtitle {
   order: 2;
-  flex: 1 1 520px;
   max-width: min(44ch, 30%);
   margin: 0;
   font-weight: 600;
