@@ -230,3 +230,34 @@ footer .footer-right { text-align: right; }
   .hero-tagline { font-size: 0.74rem; top: 1rem; }
   .hero { padding-top: 2.5rem; }
 }
+
+/* Noise masked into the hero title text */
+@keyframes noiseShift {
+  from { background-position: 0 0; }
+  to   { background-position: 100% 0; }
+}
+
+/* Default readable color (fallback if background-clip isn't supported) */
+.hero-title {
+  color: var(--text-light);
+}
+
+/* Safari/WebKit support */
+@supports (-webkit-background-clip: text) {
+  .hero-title {
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; /* make the glyphs the mask */
+    background-repeat: repeat;
+    background-size: 128px 128px;         /* scale the tile */
+    animation: noiseShift 0.35s steps(6) infinite;
+    color: transparent;                    /* ensure text isn't double-tinted */
+  }
+}
+
+/* Other modern browsers */
+@supports (background-clip: text) {
+  .hero-title {
+    background-clip: text;
+    color: transparent;
+  }
+}
