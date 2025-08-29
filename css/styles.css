@@ -150,6 +150,14 @@ nav {
   max-width: 600px;
 }
 
+/* Stack title + subtitle and align left */
+.hero-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;  /* left-align the blocks */
+  width: 100%;
+}
+
 /* Scroll Indicator (bottom of hero) */
 .scroll-indicator {
   position: absolute;
