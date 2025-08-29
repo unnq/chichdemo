@@ -2,18 +2,22 @@
 :root {
   --bg-dark: #1a1a1a;    /* softer than pure black */
   --text-light: #f2f2f2; /* softer than pure white */
-  --accent-magenta: rgba(139, 0, 139, 0.6); /* dark magenta, semi-transparent */
-  --accent-magenta-hover: rgba(139, 0, 139, 0.85);
-  --accent-grey: rgba(242, 242, 242, 0.2); /* light grey transparent */
-  --accent-grey-hover: rgba(242, 242, 242, 0.35);
+  --accent-magenta: rgba(139, 0, 139, 0.60);     /* dark magenta, semi-transparent */
+  --accent-magenta-hover: rgba(139, 0, 139, 0.40); /* darker on hover (less light) */
+  --accent-grey: rgba(242, 242, 242, 0.20);      /* light grey transparent */
+  --accent-grey-hover: rgba(242, 242, 242, 0.12); /* darker on hover (less light) */
   --nav-h: 4vh; /* sticky navbar height */
 }
+
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
   font-family: Helvetica, Arial, sans-serif;
   background-color: var(--bg-dark);
   color: var(--text-light);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Navbar */
@@ -24,12 +28,12 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: var(--nav-h);          /* fixed height */
-  padding: 0 2vw;                /* horizontal padding only */
+  height: var(--nav-h);         /* fixed height */
+  padding: 0 2vw;               /* horizontal padding only */
 }
 
 .nav-left {
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   font-weight: bold;
 }
 
@@ -37,7 +41,7 @@ nav {
   margin-left: 2rem;
   text-decoration: none;
   color: var(--text-light);
-  font-size: 1rem;
+  font-size: 0.98rem;
   display: inline-block;
   transform-origin: 50% 100%;
   transition:
@@ -49,19 +53,19 @@ nav {
 /* Text-only hover fx: subtle glow/blur + tiny flip/slide */
 .nav-right a:hover {
   text-shadow: 0 0 10px rgba(255,255,255,0.35), 0 0 2px rgba(255,255,255,0.65);
-  filter: blur(0.2px);                 /* very slight blur for glow feel */
+  filter: blur(0.2px);               /* very slight blur for glow feel */
   transform: translateY(-2px) rotateX(6deg);
 }
 
 /* Hero */
 .hero {
   position: relative;
-  min-height: 96vh;                    /* fills the rest of the viewport */
+  min-height: 96vh;                  /* fills the rest of the viewport */
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;              /* center stack */
-  margin: 0 2vw;                        /* 2vw side gutters */
+  justify-content: center;            /* center stack */
+  margin: 0 2vw;                      /* 2vw side gutters */
   text-align: center;
 }
 
@@ -69,51 +73,47 @@ nav {
 .hero-buttons {
   width: 100%;
   display: flex;
-  justify-content: space-around;        /* per request */
+  justify-content: space-around;      /* per request */
   margin-bottom: 2rem;
+  gap: 0;                              /* desktop: rely on space-around */
 }
 
 .btn {
-  padding: 0.75rem 1.5rem;
+  padding: 0.9rem 1.5rem;
   border-radius: 2px;
   font-size: 1rem;
   text-decoration: none;
   font-family: inherit;
-  border: 1px solid transparent;        /* will be set per-variant */
-  color: var(--text-light);             /* text stays solid, no transparency */
-  transition:
-    background-color 180ms ease,
-    border-color 180ms ease;
+  border: none;                        /* no borders */
+  outline: none;
+  color: var(--text-light);            /* text stays solid (no transparency) */
+  background-color: transparent;
+  transition: background-color 160ms ease;
 }
 
-/* Only background (and border) change on hover; text color stays the same */
 .btn-magenta {
   background-color: var(--accent-magenta);
-  border-color: rgba(139, 0, 139, 0.8);
 }
 .btn-magenta:hover {
-  background-color: var(--accent-magenta-hover);
-  border-color: rgba(139, 0, 139, 1);
+  background-color: var(--accent-magenta-hover); /* darker on hover */
 }
 
 .btn-light {
   background-color: var(--accent-grey);
-  border-color: rgba(242, 242, 242, 0.25);
 }
 .btn-light:hover {
-  background-color: var(--accent-grey-hover);
-  border-color: rgba(242, 242, 242, 0.45);
+  background-color: var(--accent-grey-hover);    /* darker on hover */
 }
 
 /* Hero Title */
 .hero-title {
-  /* spans visually; will downscale on small screens instead of wrapping */
-  font-size: 15vw;
+  white-space: nowrap;                 /* never wrap; shrink instead */
   font-weight: bold;
   margin: 0;
-  line-height: 0.88;          /* slightly squished vertical look */
-  letter-spacing: -0.03em;    /* modern squeeze */
-  text-align: justify;        /* requested (note: single-word lines won't justify visibly) */
+  font-size: 15vw;                     /* spans the viewport width visually */
+  line-height: 0.88;                   /* slightly squished vertical look */
+  letter-spacing: -0.03em;             /* modern squeeze */
+  text-align: justify;                 /* requested (single line won't show full effect) */
   text-align-last: justify;
 }
 
@@ -136,6 +136,7 @@ nav {
   font-family: 'Sono', monospace;
   font-size: 0.85rem;
   letter-spacing: -0.05rem;
+  padding: 0 0.25rem;
 }
 
 .scroll-text {
@@ -171,4 +172,29 @@ footer .footer-center {
 
 footer .footer-right {
   text-align: right;
+}
+
+/* =========================
+   Mobile optimizations
+   ========================= */
+@media (max-width: 900px) {
+  .nav-right a { margin-left: 1.25rem; }
+  .hero-buttons { gap: 1rem; justify-content: space-between; }
+  .btn { flex: 1; min-width: 42%; text-align: center; }
+  .hero-subtitle { max-width: 85%; }
+}
+
+@media (max-width: 480px) {
+  nav { padding: 0 4vw; }
+  .nav-right a { margin-left: 0.9rem; font-size: 0.95rem; }
+
+  .hero-buttons {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+  .btn { width: 100%; }
+
+  .hero-title { font-size: 14vw; }     /* tiny reduction to avoid edge collisions */
+  .scroll-indicator { font-size: 0.78rem; bottom: 1rem; }
 }
