@@ -194,6 +194,113 @@ nav {
   font-weight: 600;
 }
 
+/* =========================
+   Mobile Menu
+   ========================= */
+
+/* Reuse nav-link styling for the "Menu" toggle */
+.nav-menu-toggle {
+  appearance: none;
+  background: none;
+  border: 0;
+  margin-left: 2rem;
+  color: var(--text-light);
+  font: inherit;
+  font-size: 0.98rem;
+  position: relative;
+  padding: 0.35rem 0.5rem;
+  border-radius: 1px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+/* Bottom-up fill effect, same as links */
+.nav-menu-toggle::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 0%;
+  background-color: var(--accent-grey);
+  z-index: -1;
+  transition: height 180ms ease;
+}
+.nav-menu-toggle:hover::after,
+.nav-menu-toggle:focus-visible::after {
+  height: 100%;
+}
+
+/* Show toggle on mobile, hide desktop links */
+@media (max-width: 900px) {
+  .nav-right a { display: none; }
+  .nav-menu-toggle { display: inline-block; }
+}
+
+/* Panel that slides under the sticky nav */
+.mobile-menu {
+  position: fixed;
+  top: var(--nav-h);
+  left: 0;
+  right: 0;
+  height: calc(100vh - var(--nav-h));
+  background: #111;                     /* slightly different than page bg */
+  border-top: 1px solid #333;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem 2vw;
+  transform: translateY(-8px);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 200ms ease, opacity 200ms ease;
+  z-index: 9;                           /* below sticky nav (z=10) */
+}
+
+/* When opened */
+.mobile-menu.open {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Links inside panel: reuse your nav-link styles + spacing */
+.mobile-menu a {
+  text-decoration: none;
+  color: var(--text-light);
+  font-size: 1.1rem;
+  padding: 0.5rem 0.6rem;
+  border-radius: 1px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Keep the bottom-fill hover for panel links too */
+.mobile-menu a::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 0%;
+  background-color: var(--accent-grey);
+  z-index: -1;
+  transition: height 180ms ease;
+}
+.mobile-menu a:hover::after,
+.mobile-menu a:focus-visible::after {
+  height: 100%;
+}
+
+/* Prevent background scroll when menu is open */
+body.menu-open {
+  overflow: hidden;
+}
+
+/* Reduced motion respect */
+@media (prefers-reduced-motion: reduce) {
+  .mobile-menu {
+    transition: none;
+  }
+}
+
+
 /* Footer */
 footer {
   display: flex;
