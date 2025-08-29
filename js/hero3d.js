@@ -1,4 +1,6 @@
 // js/hero3d.js
+// Requires an import map in index.html mapping "three" and "three/addons/" to unpkg (or switch these imports to esm.sh).
+
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
@@ -16,16 +18,16 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
   /** ===== Config ===== */
   const MODEL_URL     = new URL('../assets/logo.glb', import.meta.url).href;
   const CAMERA_Z      = 6;
-  const TARGET_SIZE   = 1.8;   // overall model size (lower = smaller)
+  const TARGET_SIZE   = 1.8;   // overall model size (lower => smaller)
   const INITIAL_SPEED = 0.005;
   const HOVER_SPEED   = 0.018;
-  const LERP_FACTOR   = 0.08;  // easing for speed & bloom
+  const LERP_FACTOR   = 0.08;  // easing for spin & bloom
   const MAX_DPR       = 1.75;
 
   // Bloom tuning
-  const BASE_BLOOM  = 0.35;
-  const HOVER_BLOOM = 0.65;
-  const BLOOM_RADIUS = 0.6;
+  const BASE_BLOOM      = 0.35;
+  const HOVER_BLOOM     = 0.65;
+  const BLOOM_RADIUS    = 0.6;
   const BLOOM_THRESHOLD = 0.2;
 
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -34,18 +36,22 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
 
   // Scene / camera / renderer
   const scene  = new THREE.Scene();
+  scene.background = null; // ensure no scene background
+
   const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 100);
   camera.position.set(0, 0, CAMERA_Z);
 
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, MAX_DPR));
+  renderer.setClearColor(0x000000, 0); // transparent clear
+  renderer.setClearAlpha(0);
   container.appendChild(renderer.domElement);
 
   // Post-processing
-  const composer = new EffectComposer(renderer);
+  const composer   = new EffectComposer(renderer);
   const renderPass = new RenderPass(scene, camera);
   composer.addPass(renderPass);
-  const bloomPass = new UnrealBloomPass(new THREE.Vector2(1, 1), BASE_BLOOM, BLOOM_RADIUS, BLOOM_THRESHOLD);
+  const bloomPass  = new UnrealBloomPass(new THREE.Vector2(1, 1), BASE_BLOOM, BLOOM_RADIUS, BLOOM_THRESHOLD);
   composer.addPass(bloomPass);
 
   // Lights
@@ -62,6 +68,7 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
     const size = new THREE.Vector3();
     box.getSize(size);
     const maxDim = Math.max(size.x, size.y, size.z) || 1;
+
     const scale = targetSize / maxDim;
     object.scale.setScalar(scale);
 
@@ -84,11 +91,11 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
       );
     }
 
-    // (Optional) help bloom catch a bit by adding a subtle emissive
+    // Subtle emissive so bloom has something to catch
     model.traverse(o => {
       if (o.isMesh && o.material && 'emissive' in o.material) {
         o.material.emissive = new THREE.Color(0x8b008b);
-        o.material.emissiveIntensity = 0.15; // subtle
+        o.material.emissiveIntensity = 0.15;
       }
     });
 
@@ -96,7 +103,7 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
     scene.add(model);
   }
 
-  // Resize (CSS owns canvas size; we just sync buffers)
+  // Resize (CSS owns canvas size; we sync buffers)
   function onResize() {
     const w = container.clientWidth || 1;
     const h = container.clientHeight || 1;
@@ -109,9 +116,9 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
   const ro = new ResizeObserver(onResize);
   ro.observe(container);
 
-  // Raycaster hover (only accelerate when actually over the model)
+  // Raycaster hover: only speed up when pointer is actually over the model
   const raycaster = new THREE.Raycaster();
-  const pointer = new THREE.Vector2(2, 2); // start outside
+  const pointer = new THREE.Vector2(2, 2); // start outside (-1..1 range)
   let pointerInside = false;
 
   function updatePointer(e) {
