@@ -153,7 +153,7 @@ nav {
 /* Keep the primary CTA first on mobile; stack neatly */
 @media (max-width: 700px) {
   .hero-buttons {
-    flex-direction: column;
+    flex-direction: row;
     align-items: stretch;
     gap: 0.75rem;
   }
@@ -174,6 +174,7 @@ nav {
   font-size: 1rem;
   text-decoration: none;
   font-family: inherit;
+  align-self: center;
   border: none;
   outline: none;
   color: var(--text-light);         /* text stays solid */
