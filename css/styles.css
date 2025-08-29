@@ -144,7 +144,6 @@ nav {
 .hero-buttons .hero-subtitle {
   order: 2;
   max-width: min(44ch, 30%);
-  margin: 0;
   font-weight: 600;
   text-align: left;
   font-size: clamp(1rem, 1.8vw, 4vw);
