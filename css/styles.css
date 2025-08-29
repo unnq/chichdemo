@@ -1,7 +1,7 @@
 /* Base styles */
 :root {
   --bg-dark: #1a1a1a;                 /* softer than pure black */
-  --text-light: #f2f2f2;              /* softer than pure white */
+  --text-light: #f2ecf5;              /* softer than pure white */
 
   /* Buttons: darker on hover by lowering opacity */
   --accent-magenta: rgba(139, 0, 139, 0.25);
