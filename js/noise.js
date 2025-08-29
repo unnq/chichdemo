@@ -1,6 +1,6 @@
 // js/noise.js
 (function () {
-  const SIZE = 64;              // noise tile size in px (smaller = finer grain)
+  const SIZE = 160;              // noise tile size in px (smaller = finer grain)
   const ALPHA = 0.5;            // overall transparency (0..1). 0.5 ≈ 50%
   const MAGENTA = [139, 0, 139]; // your brand magenta (RGB)
   const MAGENTA_PROB = 0.008;   // ~0.8% of pixels become magenta speckles
