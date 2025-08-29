@@ -8,7 +8,10 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
   if (!container || !hero) return;
 
   /** ===== Config (tweak these) ===== */
-  const MODEL_URLS   = ['/assets/logo.glb', '/assets/s_letter.glb']; // <-- your files
+  const MODEL_URLS = [
+  new URL('../assets/logo.glb', import.meta.url).href,
+  new URL('../assets/s_letter.glb', import.meta.url).href,
+    ];
   const CAMERA_Z     = 6;
   const TARGET_SIZE  = 1.4;   // smaller than before; both models are fit to this size
   const GAP_UNITS    = 0.8;   // space between the two models (world units)
