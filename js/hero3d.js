@@ -1,6 +1,4 @@
 // js/hero3d.js
-// Requires an import map in index.html mapping "three" and "three/addons/" to unpkg (or switch these imports to esm.sh).
-
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
@@ -18,13 +16,12 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
   /** ===== Config ===== */
   const MODEL_URL     = new URL('../assets/logo.glb', import.meta.url).href;
   const CAMERA_Z      = 6;
-  const TARGET_SIZE   = 1.8;   // overall model size (lower => smaller)
+  const TARGET_SIZE   = 1.8;
   const INITIAL_SPEED = 0.005;
   const HOVER_SPEED   = 0.018;
-  const LERP_FACTOR   = 0.08;  // easing for spin & bloom
+  const LERP_FACTOR   = 0.08;
   const MAX_DPR       = 1.75;
 
-  // Bloom tuning
   const BASE_BLOOM      = 0.35;
   const HOVER_BLOOM     = 0.65;
   const BLOOM_RADIUS    = 0.6;
@@ -36,21 +33,34 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
 
   // Scene / camera / renderer
   const scene  = new THREE.Scene();
-  scene.background = null; // ensure no scene background
+  scene.background = null; // no scene background
 
   const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 100);
   camera.position.set(0, 0, CAMERA_Z);
 
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  const renderer = new THREE.WebGLRenderer({
+    antialias: true,
+    alpha: true,
+    premultipliedAlpha: true, // explicit
+  });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, MAX_DPR));
-  renderer.setClearColor(0x000000, 0); // transparent clear
+
+  // 🔑 Make the canvas clear to transparent
+  renderer.setClearColor(0x000000, 0);
   renderer.setClearAlpha(0);
+
   container.appendChild(renderer.domElement);
 
   // Post-processing
   const composer   = new EffectComposer(renderer);
   const renderPass = new RenderPass(scene, camera);
   composer.addPass(renderPass);
+
+  // 🔑 Ensure the first pass clears with alpha 0 as well
+  renderPass.clear = true;
+  renderPass.clearColor = new THREE.Color(0x000000);
+  renderPass.clearAlpha = 0;
+
   const bloomPass  = new UnrealBloomPass(new THREE.Vector2(1, 1), BASE_BLOOM, BLOOM_RADIUS, BLOOM_THRESHOLD);
   composer.addPass(bloomPass);
 
@@ -68,13 +78,12 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
     const size = new THREE.Vector3();
     box.getSize(size);
     const maxDim = Math.max(size.x, size.y, size.z) || 1;
-
     const scale = targetSize / maxDim;
     object.scale.setScalar(scale);
 
     const center = new THREE.Vector3();
     box.getCenter(center);
-    object.position.sub(center.multiplyScalar(scale)); // recenter to origin
+    object.position.sub(center.multiplyScalar(scale));
   }
 
   async function loadModel() {
@@ -116,9 +125,9 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
   const ro = new ResizeObserver(onResize);
   ro.observe(container);
 
-  // Raycaster hover: only speed up when pointer is actually over the model
+  // Raycaster hover
   const raycaster = new THREE.Raycaster();
-  const pointer = new THREE.Vector2(2, 2); // start outside (-1..1 range)
+  const pointer = new THREE.Vector2(2, 2);
   let pointerInside = false;
 
   function updatePointer(e) {
@@ -133,7 +142,7 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
   hero.addEventListener('pointermove', updatePointer);
   hero.addEventListener('pointerleave', () => { pointerInside = false; });
 
-  // Touch "bump"
+  // Touch bump
   hero.addEventListener('pointerdown', () => {
     if (reduceMotion) return;
     targetSpeed = HOVER_SPEED;
@@ -142,7 +151,6 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
 
   // Loop
   function animate() {
-    // Decide desired speed based on whether the ray hits the model
     if (!reduceMotion && model && pointerInside) {
       raycaster.setFromCamera(pointer, camera);
       const hit = raycaster.intersectObject(model, true).length > 0;
@@ -151,11 +159,9 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
       targetSpeed = reduceMotion ? 0 : INITIAL_SPEED;
     }
 
-    // Ease spin speed
     currentSpeed += (targetSpeed - currentSpeed) * LERP_FACTOR;
     if (model && !reduceMotion) model.rotation.y += currentSpeed;
 
-    // Ease bloom strength to match hover state
     const bloomTarget = (targetSpeed > INITIAL_SPEED + 1e-4) ? HOVER_BLOOM : BASE_BLOOM;
     bloomPass.strength += (bloomTarget - bloomPass.strength) * LERP_FACTOR;
 
