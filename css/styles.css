@@ -147,18 +147,21 @@ nav {
 }
 
 .hero-3d {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;   /* hero handles hover */
-  overflow: hidden;       /* no accidental bleed */
+  position: relative;           /* becomes a normal block in the flow */
+  width: 100%;
+  height: clamp(240px, 42vh, 560px); /* pick your band */
+  margin: 1rem 0;               /* space above/below */
+  pointer-events: none;         /* keep UI click-through */
+  overflow: hidden;
 }
 
-/* Canvas fills the container (do NOT absolutely position the canvas) */
+/* Canvas fills the block */
 .hero-3d canvas {
-  display: block;
+  position: absolute;
+  inset: 0;
   width: 100% !important;
   height: 100% !important;
+  display: block;
 }
 
 /* Keep all other hero children above the canvas */
