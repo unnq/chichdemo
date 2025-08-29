@@ -168,7 +168,7 @@ nav {
 
 .btn {
   /* Fluid padding with min/max guards */
-  padding-block: clamp(1.2rem, 2.8vw, 3.0rem);
+  padding-block: clamp(1.75rem, 2.8vw, 3.0rem);
   padding-inline: clamp(1.6rem, 7vw, 5.0rem);
   border-radius: 1px;
   font-size: 1rem;
