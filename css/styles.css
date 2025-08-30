@@ -164,7 +164,6 @@ nav {
 
 /* Ensure all other hero children sit above the canvas */
 .hero > *:not(.hero-3d) {
-  position: relative;
   z-index: 1;
 }
 
