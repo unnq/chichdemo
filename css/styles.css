@@ -86,6 +86,16 @@ nav{
   font-size: 0.98rem;
 }
 
+.nav-right a:not(.btn-cta){
+  color: var(--text-dark);
+}
+
+/* ensure CTA text is light before hover (and after visit) */
+.nav-right .btn-cta,
+.nav-right .btn-cta:visited{
+  color: #fff; /* or var(--text-on-blue) if you add it */
+}
+
 /* Contact button shares CTA styling */
 .btn-cta{
   display:inline-block;
