@@ -7,6 +7,8 @@
   --brand-blue: #3b82f6;         /* same as the blue blob */
   --hairline: rgba(0,0,0,0.10);  /* for borders on light UI */
 
+ --font-sans: "Inter", Arial, sans-serif;
+
   --nav-h: 72px;                 /* taller navbar */
   --container-max: 1200px;
   --container-pad: clamp(16px, 3vw, 28px);
@@ -22,7 +24,7 @@ html, body{
   padding:0;
   background:var(--bg-light);
   color:var(--text-dark);
-  font-family:"Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  font-family: var(--font-sans);
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
 }
