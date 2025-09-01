@@ -61,11 +61,13 @@ nav{
   display:flex;
   align-items:center;
 }
+
 .nav-inner{
   display:flex;
-  justify-content:space-between;
+  justify-content: space-between;
   align-items:center;
-  gap:20px;
+  gap: 20px;
+  padding-inline: clamp(16px, 3vw, 28px); /* side padding */
 }
 
 .nav-left{
