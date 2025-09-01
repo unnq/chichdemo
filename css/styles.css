@@ -71,7 +71,7 @@ nav {
 }
 
 .nav-left{
-  font-size: 1.2rem;
+  font-size: 2rem;
   font-weight: 800;
   letter-spacing: 0.2px;
   color: var(--text-dark);      /* no gradient, no static */
@@ -136,7 +136,7 @@ nav {
    ========================= */
 .hero{
   position: relative;
-  min-height: calc(100dvh - var(--nav-h));
+  min-height: calc(86dvh - var(--nav-h));
   display: grid;
   grid-template-rows: auto 1fr auto; /* tagline / core / scroll-indicator */
   isolation:isolate;
@@ -188,7 +188,7 @@ nav {
   line-height:0.9;
   letter-spacing:-0.03em;
   font-weight:800;
-  font-family: Helvetica, Arial, sans-serif;
+  font-family: "Inter", Helvetica, Arial, sans-serif;
   font-size: clamp(48px, 12vw, 160px);
   text-align:left;
 }
