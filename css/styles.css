@@ -4,7 +4,7 @@
 :root{
   --bg-light: #f2f1f0;           /* site background */
   --text-dark: #2c2d2e;          /* body text */
-  --brand-blue: #06b6d4;         /* same as the blue blob */
+  --brand-blue: #3b82f6;         /* same as the blue blob */
   --hairline: rgba(0,0,0,0.10);  /* for borders on light UI */
 
   --nav-h: 72px;                 /* taller navbar */
