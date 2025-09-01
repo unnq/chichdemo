@@ -1,34 +1,51 @@
-/* Base styles */
+/* =========================
+   Base + Design Tokens
+   ========================= */
 :root {
-  --bg-dark: #1a1a1a;                 /* softer than pure black */
-  --text-light: #f2ecf5;              /* softer than pure white */
+  --bg-dark: #0b0b0e;                 /* deeper than previous */
+  --text-light: #f5f7fb;
 
-  /* Buttons: darker on hover by lowering opacity */
-  --accent-magenta: rgba(139, 0, 139, 0.25);
-  --accent-magenta-hover: rgba(139, 0, 139, 0.15);
-  --accent-grey: rgba(242, 242, 242, 0.10);
-  --accent-grey-hover: rgba(242, 242, 242, 0.06);
+  /* Vibrant gradient system */
+  --g1: #8b5cf6; /* violet */
+  --g2: #06b6d4; /* cyan */
+  --g3: #22c55e; /* mint */
+  --g4: #f59e0b; /* amber (accent) */
 
-  --nav-h: 4vh;                        /* sticky navbar height (fallback) */
+  /* UI surfaces */
+  --surface-1: rgba(255,255,255,0.06);
+  --surface-2: rgba(255,255,255,0.10);
+  --hairline: rgba(255,255,255,0.15);
+
+  /* Focus ring */
+  --focus: rgba(255,255,255,0.45);
+
+  --nav-h: 4vh; /* fallback */
 }
 
-/* Use dynamic viewport height on modern browsers */
 @supports (height: 100dvh) {
   :root { --nav-h: 4dvh; }
 }
 
 * { box-sizing: border-box; }
 
-body {
+html, body {
   margin: 0;
-  font-family: "Montserrat", Helvetica, Arial, sans-serif;
-  background-color: var(--bg-dark);
+  padding: 0;
+  background: var(--bg-dark);
   color: var(--text-light);
+  font-family: "Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Navbar */
+/* Utility: gradient line for borders/underlines */
+:root {
+  --gradient-line: linear-gradient(90deg, var(--g1), var(--g2), var(--g3));
+}
+
+/* =========================
+   Navbar
+   ========================= */
 nav {
   position: sticky;
   top: 0;
@@ -38,231 +55,71 @@ nav {
   align-items: center;
   height: var(--nav-h);
   padding: 0 2vw;
+  background: transparent;
 }
 
 .nav-left {
   font-size: 1.15rem;
-  font-weight: bold;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  /* subtle animated noise mask still supported by your noise.js */
+  color: var(--text-light); /* fallback/non-webkit */
 }
 
-/* Nav links: text-only fill from bottom on hover; no glow, no motion */
+@supports (-webkit-background-clip: text) {
+  .nav-left {
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-image: linear-gradient(90deg, var(--g1), var(--g2));
+    background-size: 200% 100%;
+    animation: titlePan 8s ease-in-out infinite alternate;
+  }
+}
+@supports (background-clip: text) {
+  .nav-left {
+    background-clip: text;
+    color: transparent;
+  }
+}
+
 .nav-right a {
   margin-left: 2rem;
   text-decoration: none;
   color: var(--text-light);
   font-size: 0.98rem;
   display: inline-block;
+  padding: 0.35rem 0.5rem;
   position: relative;
-  padding: 0.35rem 0.5rem;    /* give the fill some area */
-  border-radius: 1px;         /* 1px radius */
-  overflow: hidden;           /* clip the ::after fill */
-  z-index: 0;                 /* stacking context for ::after */
-  transition: color 0s;       /* no color change on hover */
+  border-radius: 2px;
+  transition: opacity 140ms ease;
 }
 
 .nav-right a::after {
   content: "";
   position: absolute;
-  left: 0; right: 0; bottom: 0;
-  height: 0%;
-  background-color: var(--accent-grey); /* same tone as light button */
-  z-index: -1;                          /* behind link text */
-  transition: height 180ms ease;
+  left: 0; right: 0; bottom: -2px;
+  height: 2px;
+  background-image: var(--gradient-line);
+  background-size: 200% 100%;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 180ms ease, background-position 600ms ease;
 }
 
 .nav-right a:hover::after,
 .nav-right a:focus-visible::after {
-  height: 100%;                         /* fill from bottom up */
+  transform: scaleX(1);
+  background-position: 100% 0;
 }
 
-/* (Accessible) focus ring */
 .nav-right a:focus-visible {
-  outline: 2px dashed rgba(255,255,255,0.35);
-  outline-offset: 2px;
+  outline: 2px dashed var(--focus);
+  outline-offset: 3px;
 }
 
-/* Hero */
-.hero {
-  position: relative;
-
-  /* Fixed height (not min-height) so it never exceeds viewport */
-  height: calc(100vh - var(--nav-h));           /* fallback */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: 0 2vw;
-  text-align: center;
-  box-sizing: border-box;
-}
-
-/* Use dynamic viewport height when supported */
-@supports (height: 100dvh) {
-  .hero { height: calc(100dvh - var(--nav-h)); }
-}
-
-/* Top-of-hero tagline */
-.hero-tagline {
-  position: absolute;
-  top: 1.25rem;
-  left: 0;
-  right: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-family: 'Sono', monospace;
-  font-size: 0.85rem;
-  letter-spacing: -0.05rem;
-  padding: 0 0.25rem;
-}
-
-.tagline-text { text-align: center; flex: 1; }
-.hero-tagline .asterisk-left,
-.hero-tagline .asterisk-right { font-weight: 600; }
-
-/* Hero Buttons */
-.hero-buttons {
-  width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: clamp(1rem, 4vw, 3rem);
-    margin-top: 5vh;
-    margin-bottom: auto;
-}
-
-/* Button stays compact on the left */
-.hero-buttons .btn {
-  flex: 0 0 auto;
-}
-
-/* Subtitle lives on the right, readable width, no extra margins */
-.hero-buttons .hero-subtitle {
-  order: 2;
-  max-width: min(44ch, 30%);
-  font-weight: 600;
-  text-align: left;
-  font-size: clamp(1rem, 1.8vw, 4vw);
-  line-height: 1.3;
-}
-
-.hero-3d {
-  position: absolute;
-  inset: 0;                         /* fill the entire hero */
-  z-index: 0; 
-  pointer-events: none;             /* keep UI interactive */
-  overflow: hidden;                 /* no bleed */
-  margin: 0;                        /* reset in case slot styles were applied */
-}
-
-.hero-3d canvas {
-  display: block;
-  width: 100% !important;
-  height: 100% !important;
-  background: transparent !important;
-}
-
-/* Ensure all other hero children sit above the canvas */
-.hero > *:not(.hero-3d) {
-  z-index: 1;
-}
-
-
-
-/* Keep the primary CTA first on mobile; stack neatly */
-@media (max-width: 700px) {
-  .hero-buttons {
-    flex-direction: row;
-    align-items: stretch;
-    gap: 0.75rem;
-  }
-  .hero-buttons .btn {
-    order: 1;
-  }
-  .hero-buttons .hero-subtitle {
-    order: 2;
-    max-width: 100%;
-  }
-}
-
-.btn {
-  /* Fluid padding with min/max guards */
-  padding-block: clamp(1.75rem, 2.8vw, 3.0rem);
-  padding-inline: clamp(1.6rem, 7vw, 5.0rem);
-  border-radius: 1px;
-  font-size: 1rem;
-  text-decoration: none;
-  font-family: inherit;
-  align-self: center;
-  border: none;
-  outline: none;
-  color: var(--text-light);         /* text stays solid */
-  background-color: transparent;
-  transition: background-color 160ms ease;
-}
-
-.btn-magenta { background-color: var(--accent-magenta); }
-.btn-magenta:hover { background-color: var(--accent-magenta-hover); }
-
-.btn-light { background-color: var(--accent-grey); }
-.btn-light:hover { background-color: var(--accent-grey-hover); }
-
-/* Title + Subtitle stack, aligned left edge */
-.hero-stack {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;          /* align subtitle to title's left */
-  width: 100%;
-  margin-top: auto;
-  margin-bottom: 5vh;
-}
-
-/* Hero Title */
-.hero-title {
-  white-space: nowrap;              /* never wrap; shrink instead */
-  font-weight: bold;
-  margin: 0;
-  font-family: Helvetica, Arial, sans-serif;
-  font-size: 15vw;                  /* spans viewport width visually */
-  line-height: 0.88;                /* slightly squished vertical look */
-  letter-spacing: -0.03em;          /* modern squeeze */
-  text-align: justify;              /* (single line shows little effect) */
-  text-align-last: justify;
-}
-
-/* Hero Subtitle */
-.hero-subtitle {
-  text-align: left;
-  font-size: clamp(1rem, 2vw, 1.5rem);
-  max-width: 600px;
-}
-
-/* Scroll Indicator (bottom of hero) */
-.scroll-indicator {
-  position: absolute;
-  bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
-  left: 0;
-  right: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-family: 'Sono', monospace;
-  font-size: 0.85rem;
-  letter-spacing: -0.05rem;
-  padding: 0 0.25rem;
-}
-
-.scroll-text { text-align: center; flex: 1; }
-.asterisk-left,
-.asterisk-right { font-weight: 600; }
-
-/* =========================
-   Mobile Menu
-   ========================= */
-
-/* Desktop default: hide the mobile menu toggle */
+/* Mobile toggle */
 .nav-menu-toggle {
-  display: none;               /* hide on desktop */
+  display: none;
   appearance: none;
   background: none;
   border: 0;
@@ -270,41 +127,182 @@ nav {
   color: var(--text-light);
   font: inherit;
   font-size: 0.98rem;
-  position: relative;
   padding: 0.35rem 0.5rem;
-  border-radius: 1px;
-  overflow: hidden;
+  border-radius: 6px;
+  position: relative;
   cursor: pointer;
 }
-
-/* Bottom-up fill effect, same as links */
-.nav-menu-toggle::after {
-  content: "";
-  position: absolute;
-  left: 0; right: 0; bottom: 0;
-  height: 0%;
-  background-color: var(--accent-grey);
-  z-index: -1;
-  transition: height 180ms ease;
+.nav-menu-toggle:focus-visible {
+  outline: 2px dashed var(--focus);
+  outline-offset: 3px;
 }
-.nav-menu-toggle:hover::after,
-.nav-menu-toggle:focus-visible::after { height: 100%; }
 
-/* Show toggle on mobile, hide desktop links */
+/* =========================
+   Hero
+   ========================= */
+.hero {
+  position: relative;
+  height: calc(100vh - var(--nav-h));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 2vw;
+  text-align: center;
+  isolation: isolate; /* ensure compositing for background canvas */
+}
+
+@supports (height: 100dvh) {
+  .hero { height: calc(100dvh - var(--nav-h)); }
+}
+
+/* Animated background canvas host */
+.hero-3d {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Tagline at top of hero */
+.hero-tagline {
+  position: absolute;
+  top: 1.25rem;
+  left: 0; right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Sono', monospace;
+  font-size: 0.85rem;
+  letter-spacing: -0.05rem;
+  padding: 0 0.25rem;
+  z-index: 1;
+}
+
+.tagline-text { text-align: center; flex: 1; }
+.hero-tagline .asterisk-left,
+.hero-tagline .asterisk-right { font-weight: 600; }
+
+/* Buttons row + subtitle */
+.hero-buttons {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: clamp(1rem, 4vw, 3rem);
+  margin-top: 5vh;
+  margin-bottom: auto;
+  z-index: 1;
+}
+
+.hero-buttons .hero-subtitle {
+  order: 2;
+  max-width: min(44ch, 32%);
+  font-weight: 600;
+  text-align: left;
+  font-size: clamp(1rem, 1.8vw, 1.25rem);
+  line-height: 1.35;
+}
+
+/* CTA button */
+.btn {
+  padding-block: clamp(1.1rem, 1.8vw, 1.35rem);
+  padding-inline: clamp(1.4rem, 5vw, 2.4rem);
+  border-radius: 999px;
+  font-size: 1rem;
+  text-decoration: none;
+  font-weight: 700;
+  border: 1px solid var(--hairline);
+  color: var(--text-light);
+  background: var(--surface-1);
+  backdrop-filter: saturate(120%) blur(6px);
+  -webkit-backdrop-filter: saturate(120%) blur(6px);
+  transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease, border-color 160ms ease;
+}
+.btn:focus-visible {
+  outline: 2px dashed var(--focus);
+  outline-offset: 4px;
+}
+
+.btn-gradient {
+  background-image: linear-gradient(135deg, var(--g1), var(--g2));
+  box-shadow: 0 0 0 rgba(0,0,0,0);
+}
+.btn-gradient:hover {
+  transform: translateY(-1px);
+  background-image: linear-gradient(135deg, var(--g2), var(--g3));
+  border-color: rgba(255,255,255,0.25);
+  box-shadow: 0 10px 30px rgba(6, 182, 212, 0.15), 0 2px 6px rgba(0,0,0,0.25);
+}
+
+/* Title stack */
+.hero-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  margin-top: auto;
+  margin-bottom: 5vh;
+  z-index: 1;
+}
+
+/* Hero Title */
+.hero-title {
+  margin: 0;
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+  text-align: left;
+  font-weight: 800;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: clamp(6rem, 15vw, 16rem);
+  white-space: nowrap;
+}
+
+/* Gradient text with subtle shimmer */
+.title-gradient {
+  background-image: linear-gradient(90deg, var(--g1), var(--g2), var(--g3));
+  background-size: 200% 100%;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: titlePan 10s ease-in-out infinite alternate;
+}
+
+/* Scroll indicator */
+.scroll-indicator {
+  position: absolute;
+  bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+  left: 0; right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Sono', monospace;
+  font-size: 0.85rem;
+  letter-spacing: -0.05rem;
+  padding: 0 0.25rem;
+  z-index: 1;
+}
+.scroll-text { text-align: center; flex: 1; }
+.asterisk-left, .asterisk-right { font-weight: 600; }
+
+/* =========================
+   Mobile Menu Panel
+   ========================= */
 @media (max-width: 900px) {
   .nav-right a { display: none; }
   .nav-menu-toggle { display: inline-block; }
 }
 
-/* Panel that slides under the sticky nav */
 .mobile-menu {
   position: fixed;
   top: var(--nav-h);
-  left: 0;
-  right: 0;
-  height: calc(100vh - var(--nav-h));     /* fallback */
-  background: #111;                       /* slightly different than page bg */
-  border-top: 1px solid #333;
+  left: 0; right: 0;
+  height: calc(100vh - var(--nav-h));
+  background: radial-gradient(1200px 600px at 20% -10%, rgba(139,92,246,0.12), transparent),
+              radial-gradient(1200px 600px at 100% 0%, rgba(6,182,212,0.10), transparent),
+              rgba(8,9,12,0.92);
+  border-top: 1px solid rgba(255,255,255,0.08);
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -313,53 +311,45 @@ nav {
   opacity: 0;
   pointer-events: none;
   transition: transform 200ms ease, opacity 200ms ease;
-  z-index: 9;                             /* below sticky nav (z=10) */
+  z-index: 9;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 }
-
 @supports (height: 100dvh) {
   .mobile-menu { height: calc(100dvh - var(--nav-h)); }
 }
-
-/* When opened */
 .mobile-menu.open {
   transform: translateY(0);
   opacity: 1;
   pointer-events: auto;
 }
-
-/* Links inside panel */
 .mobile-menu a {
   text-decoration: none;
   color: var(--text-light);
   font-size: 1.1rem;
-  padding: 0.5rem 0.6rem;
-  border-radius: 1px;
+  padding: 0.6rem 0.7rem;
+  border-radius: 10px;
   position: relative;
   overflow: hidden;
 }
-
-/* Bottom-fill hover for panel links too */
 .mobile-menu a::after {
   content: "";
   position: absolute;
   left: 0; right: 0; bottom: 0;
-  height: 0%;
-  background-color: var(--accent-grey);
-  z-index: -1;
-  transition: height 180ms ease;
+  height: 2px;
+  background-image: var(--gradient-line);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 180ms ease;
 }
 .mobile-menu a:hover::after,
-.mobile-menu a:focus-visible::after { height: 100%; }
+.mobile-menu a:focus-visible::after { transform: scaleX(1); }
 
-/* Prevent background scroll when menu is open */
 body.menu-open { overflow: hidden; }
 
-/* Reduced motion respect */
-@media (prefers-reduced-motion: reduce) {
-  .mobile-menu { transition: none; }
-}
-
-/* Footer */
+/* =========================
+   Footer
+   ========================= */
 footer {
   display: flex;
   justify-content: space-between;
@@ -367,62 +357,47 @@ footer {
   padding: 1rem 2vw;
   font-family: 'Sono', monospace;
   font-size: 0.9rem;
-  border-top: 1px solid #333;
+  border-top: 1px solid rgba(255,255,255,0.08);
   margin-top: 4rem;
+  background:
+    linear-gradient(90deg, rgba(139,92,246,0.08), rgba(6,182,212,0.08), rgba(34,197,94,0.08));
 }
 
-footer .footer-left { letter-spacing: -0.05rem; }
-footer .footer-center { text-align: center; flex: 1; }
-footer .footer-right { text-align: right; }
-
 /* =========================
-   Mobile optimizations
+   Responsive tweaks
    ========================= */
 @media (max-width: 900px) {
   .nav-right a { margin-left: 1.25rem; }
   .hero-subtitle { max-width: 85%; }
   .hero-tagline { font-size: 0.8rem; }
+  .hero-buttons {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  .btn { align-self: flex-start; }
 }
 
 @media (max-width: 480px) {
   nav { padding: 0 4vw; }
   .nav-right a { margin-left: 0.9rem; font-size: 0.95rem; }
-  .btn { width: auto; }
-
-  .hero-title { font-size: 14vw; }     /* tiny reduction to avoid edge collisions */
-  .scroll-indicator { font-size: 0.78rem; bottom: calc(1rem + env(safe-area-inset-bottom, 0px)); }
-  .hero-tagline { font-size: 0.74rem; top: 1rem; }
-  .hero { padding-top: 2.5rem; }
+  .hero-title { font-size: 14vw; }
+  .scroll-indicator { font-size: 0.78rem; }
+  .hero-tagline { font-size: 0.75rem; top: 1rem; }
+  .hero { padding-top: 2.2rem; }
 }
 
 /* =========================
-   Noise masked into NAV LEFT text
+   Motion + keyframes
    ========================= */
-
-/* Keyframes to shift the noise (used by nav-left text fill) */
-@keyframes noiseShift {
-  from { background-position: 0 0; }
-  to   { background-position: 100% 0; }
+@keyframes titlePan {
+  0% { background-position: 0% 0; }
+  100% { background-position: 100% 0; }
 }
 
-/* Fallback: keep normal color if clipping isn't supported */
-.nav-left { color: var(--text-light); }
-
-/* Safari/WebKit support */
-@supports (-webkit-background-clip: text) {
-  .nav-left {
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;  /* glyphs become the mask */
-    background-repeat: repeat;
-    background-size: 160px 160px;          /* matches 160×160 tile from JS */
-    animation: noiseShift 0.15s steps(6) infinite;
-  }
-}
-
-/* Other modern browsers */
-@supports (background-clip: text) {
-  .nav-left {
-    background-clip: text;
-    color: transparent;                     /* ensure no double tint */
-  }
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .title-gradient { animation: none; }
+  .nav-left { animation: none; }
+  .mobile-menu { transition: none; }
 }
