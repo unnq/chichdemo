@@ -2,7 +2,7 @@
    Base + Design Tokens
    ========================= */
 :root {
-  --bg-dark: #9d9d9d;                 /* slightly deeper for contrast */
+  --bg-dark: #dfdfdf;                 /* slightly deeper for contrast */
   --text-light: #2c2d2e;
 
   /* Vibrant gradient system (kept, but will pop more due to higher alpha in JS) */
