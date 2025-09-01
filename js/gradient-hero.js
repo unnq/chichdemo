@@ -3,13 +3,13 @@
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const root = document.documentElement;
-  const getCSS = (v) => getComputedStyle(root).getPropertyValue(v).trim();
+  const cssVar = (v) => getComputedStyle(root).getPropertyValue(v).trim();
 
   const colors = [
-    getCSS('--g1') || '#8b5cf6', // violet
-    getCSS('--g2') || '#06b6d4', // cyan
-    getCSS('--g3') || '#22c55e', // mint
-    getCSS('--g4') || '#f59e0b'  // amber (sparingly)
+    cssVar('--g1') || '#8b5cf6',
+    cssVar('--g2') || '#06b6d4',
+    cssVar('--g3') || '#22c55e',
+    cssVar('--g4') || '#f59e0b'
   ];
 
   const host = document.querySelector('.hero-3d');
@@ -24,11 +24,6 @@
 
   const ctx = canvas.getContext('2d');
   let w = 0, h = 0, dpr = 1;
-  let t = 0;
-
-  // Parallax targets
-  let pointerX = 0.5, pointerY = 0.5; // normalized
-  let scrollBias = 0;
 
   function resize() {
     dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
@@ -38,57 +33,10 @@
     canvas.height = Math.floor(h * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
-
-  function lerp(a, b, m) { return a + (b - a) * m; }
-
-  function drawFrame(ts) {
-    if (!prefersReduced) t = ts * 0.0003; // slow drift
-
-    // Clear with dark base
-    ctx.clearRect(0, 0, w, h);
-    ctx.fillStyle = getCSS('--bg-dark') || '#0b0b0e';
-    ctx.fillRect(0, 0, w, h);
-
-    // Parameters
-    const cx = w * lerp(0.35, 0.65, pointerX);
-    const cy = h * lerp(0.35, 0.65, pointerY);
-    const maxR = Math.max(w, h) * 0.9;
-
-    // Gentle orbit offsets
-    const orbits = [
-      { r: maxR * 0.9,  k: 0.85,  speed: 0.6,  a: 0.35 },
-      { r: maxR * 0.7,  k: 0.55,  speed: -0.45, a: 0.32 },
-      { r: maxR * 0.6,  k: 0.35,  speed: 0.35,  a: 0.27 },
-      { r: maxR * 1.1,  k: 0.95,  speed: -0.25, a: 0.18 }, // accent
-    ];
-
-    ctx.globalCompositeOperation = 'lighter';
-
-    for (let i = 0; i < colors.length; i++) {
-      const o = orbits[i];
-      const angle = (t * o.speed) + i * Math.PI * 0.5 + scrollBias * 0.25;
-
-      const ox = cx + Math.cos(angle) * (w * 0.15 * o.k);
-      const oy = cy + Math.sin(angle) * (h * 0.15 * o.k);
-
-      const grad = ctx.createRadialGradient(ox, oy, 0, ox, oy, o.r);
-      grad.addColorStop(0.0, hexWithAlpha(colors[i], o.a));
-      grad.addColorStop(0.5, hexWithAlpha(colors[i], o.a * 0.35));
-      grad.addColorStop(1.0, hexWithAlpha(colors[i], 0.0));
-
-      ctx.fillStyle = grad;
-      ctx.beginPath();
-      ctx.arc(ox, oy, o.r, 0, Math.PI * 2);
-      ctx.fill();
-    }
-
-    ctx.globalCompositeOperation = 'source-over';
-
-    if (!prefersReduced) requestAnimationFrame(drawFrame);
-  }
+  window.addEventListener('resize', resize, { passive: true });
+  resize();
 
   function hexWithAlpha(hex, alpha) {
-    // Accepts #rgb, #rrggbb, or already rgba()
     if (!hex) return `rgba(255,255,255,${alpha})`;
     if (hex.startsWith('rgb')) {
       return hex.replace(/\)$/, `, ${alpha})`).replace('rgb(', 'rgba(');
@@ -106,26 +54,57 @@
     return `rgba(${r},${g},${b},${alpha})`;
   }
 
-  // Parallax from pointer
-  window.addEventListener('pointermove', (e) => {
-    const rect = host.getBoundingClientRect();
-    pointerX = (e.clientX - rect.left) / Math.max(1, rect.width);
-    pointerY = (e.clientY - rect.top) / Math.max(1, rect.height);
-  }, { passive: true });
+  // Self-driven animation (no pointer/scroll input)
+  function draw(ts) {
+    const t = (ts || 0) * 0.00035; // slow, fluid
 
-  // Subtle scroll bias
-  window.addEventListener('scroll', () => {
-    const y = window.scrollY || 0;
-    scrollBias = (y % window.innerHeight) / Math.max(1, window.innerHeight);
-  }, { passive: true });
+    // Base fill (very dark, so the colors pop)
+    ctx.clearRect(0, 0, w, h);
+    ctx.fillStyle = cssVar('--bg-dark') || '#0b0b0e';
+    ctx.fillRect(0, 0, w, h);
 
-  window.addEventListener('resize', resize);
-  resize();
+    const cx = w * 0.5;
+    const cy = h * 0.5;
+    const maxR = Math.max(w, h);
+
+    // Four orbiting blobs with different radii/speeds/phases
+    const blobs = [
+      { r: maxR * 0.95, ampX: w * 0.18, ampY: h * 0.14, speed: 0.60, phase: 0.00, a: 0.60 },
+      { r: maxR * 0.75, ampX: w * 0.22, ampY: h * 0.18, speed: -0.45, phase: 1.20, a: 0.52 },
+      { r: maxR * 0.65, ampX: w * 0.16, ampY: h * 0.22, speed: 0.36, phase: 2.40, a: 0.48 },
+      { r: maxR * 1.15, ampX: w * 0.14, ampY: h * 0.10, speed: -0.25, phase: 3.10, a: 0.40 }
+    ];
+
+    // Use 'screen' for a brighter blend without overblown whites
+    ctx.globalCompositeOperation = 'screen';
+
+    for (let i = 0; i < colors.length; i++) {
+      const b = blobs[i];
+      const ax = Math.cos(t * b.speed + b.phase) * b.ampX;
+      const ay = Math.sin(t * b.speed * 0.85 + b.phase * 0.8) * b.ampY;
+
+      const x = cx + ax;
+      const y = cy + ay;
+
+      const grad = ctx.createRadialGradient(x, y, 0, x, y, b.r);
+      // Stronger inner stops for more pop
+      grad.addColorStop(0.0, hexWithAlpha(colors[i], b.a));
+      grad.addColorStop(0.35, hexWithAlpha(colors[i], b.a * 0.55));
+      grad.addColorStop(1.0, hexWithAlpha(colors[i], 0.0));
+
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(x, y, b.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    ctx.globalCompositeOperation = 'source-over';
+    if (!prefersReduced) requestAnimationFrame(draw);
+  }
 
   if (prefersReduced) {
-    // Draw a single static frame for reduced motion users
-    drawFrame(0);
+    draw(0); // single static frame
   } else {
-    requestAnimationFrame(drawFrame);
+    requestAnimationFrame(draw);
   }
 })();
