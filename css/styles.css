@@ -2,22 +2,20 @@
    Base + Design Tokens
    ========================= */
 :root {
-  --bg-dark: #0b0b0e;                 /* deeper than previous */
+  --bg-dark: #07080b;                 /* slightly deeper for contrast */
   --text-light: #f5f7fb;
 
-  /* Vibrant gradient system */
+  /* Vibrant gradient system (kept, but will pop more due to higher alpha in JS) */
   --g1: #8b5cf6; /* violet */
   --g2: #06b6d4; /* cyan */
   --g3: #22c55e; /* mint */
-  --g4: #f59e0b; /* amber (accent) */
+  --g4: #f59e0b; /* amber */
 
-  /* UI surfaces */
   --surface-1: rgba(255,255,255,0.06);
   --surface-2: rgba(255,255,255,0.10);
-  --hairline: rgba(255,255,255,0.15);
+  --hairline: rgba(255,255,255,0.18);
 
-  /* Focus ring */
-  --focus: rgba(255,255,255,0.45);
+  --focus: rgba(255,255,255,0.50);
 
   --nav-h: 4vh; /* fallback */
 }
@@ -38,32 +36,28 @@ html, body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Utility: gradient line for borders/underlines */
-:root {
-  --gradient-line: linear-gradient(90deg, var(--g1), var(--g2), var(--g3));
-}
+:root { --gradient-line: linear-gradient(90deg, var(--g1), var(--g2), var(--g3)); }
 
 /* =========================
-   Navbar
+   Navbar (transparent, on top of hero)
    ========================= */
 nav {
-  position: sticky;
+  position: sticky;   /* keeps it pinned while scrolling */
   top: 0;
-  z-index: 10;
+  z-index: 20;        /* higher than hero content */
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: var(--nav-h);
   padding: 0 2vw;
-  background: transparent;
+  background: transparent;  /* << transparent so gradient shows through */
 }
 
 .nav-left {
   font-size: 1.15rem;
   font-weight: 700;
   letter-spacing: 0.2px;
-  /* subtle animated noise mask still supported by your noise.js */
-  color: var(--text-light); /* fallback/non-webkit */
+  color: var(--text-light);
 }
 
 @supports (-webkit-background-clip: text) {
@@ -76,10 +70,7 @@ nav {
   }
 }
 @supports (background-clip: text) {
-  .nav-left {
-    background-clip: text;
-    color: transparent;
-  }
+  .nav-left { background-clip: text; color: transparent; }
 }
 
 .nav-right a {
@@ -93,7 +84,6 @@ nav {
   border-radius: 2px;
   transition: opacity 140ms ease;
 }
-
 .nav-right a::after {
   content: "";
   position: absolute;
@@ -105,19 +95,13 @@ nav {
   transform-origin: left;
   transition: transform 180ms ease, background-position 600ms ease;
 }
-
 .nav-right a:hover::after,
 .nav-right a:focus-visible::after {
   transform: scaleX(1);
   background-position: 100% 0;
 }
+.nav-right a:focus-visible { outline: 2px dashed var(--focus); outline-offset: 3px; }
 
-.nav-right a:focus-visible {
-  outline: 2px dashed var(--focus);
-  outline-offset: 3px;
-}
-
-/* Mobile toggle */
 .nav-menu-toggle {
   display: none;
   appearance: none;
@@ -132,13 +116,10 @@ nav {
   position: relative;
   cursor: pointer;
 }
-.nav-menu-toggle:focus-visible {
-  outline: 2px dashed var(--focus);
-  outline-offset: 3px;
-}
+.nav-menu-toggle:focus-visible { outline: 2px dashed var(--focus); outline-offset: 3px; }
 
 /* =========================
-   Hero
+   Hero (edge-to-edge, no side margins)
    ========================= */
 .hero {
   position: relative;
@@ -147,9 +128,12 @@ nav {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 0 2vw;
+
+  margin: 0;                 /* << remove side margins */
+  padding: 0 0;              /* ensure edge-to-edge */
+  width: 100%;               /* full width */
   text-align: center;
-  isolation: isolate; /* ensure compositing for background canvas */
+  isolation: isolate;
 }
 
 @supports (height: 100dvh) {
@@ -165,7 +149,7 @@ nav {
   overflow: hidden;
 }
 
-/* Tagline at top of hero */
+/* Top-of-hero tagline */
 .hero-tagline {
   position: absolute;
   top: 1.25rem;
@@ -179,14 +163,13 @@ nav {
   padding: 0 0.25rem;
   z-index: 1;
 }
-
 .tagline-text { text-align: center; flex: 1; }
 .hero-tagline .asterisk-left,
 .hero-tagline .asterisk-right { font-weight: 600; }
 
-/* Buttons row + subtitle */
+/* Buttons + subtitle */
 .hero-buttons {
-  width: 100%;
+  width: min(92rem, 92vw);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -195,7 +178,6 @@ nav {
   margin-bottom: auto;
   z-index: 1;
 }
-
 .hero-buttons .hero-subtitle {
   order: 2;
   max-width: min(44ch, 32%);
@@ -205,7 +187,7 @@ nav {
   line-height: 1.35;
 }
 
-/* CTA button */
+/* CTA */
 .btn {
   padding-block: clamp(1.1rem, 1.8vw, 1.35rem);
   padding-inline: clamp(1.4rem, 5vw, 2.4rem);
@@ -220,11 +202,7 @@ nav {
   -webkit-backdrop-filter: saturate(120%) blur(6px);
   transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease, border-color 160ms ease;
 }
-.btn:focus-visible {
-  outline: 2px dashed var(--focus);
-  outline-offset: 4px;
-}
-
+.btn:focus-visible { outline: 2px dashed var(--focus); outline-offset: 4px; }
 .btn-gradient {
   background-image: linear-gradient(135deg, var(--g1), var(--g2));
   box-shadow: 0 0 0 rgba(0,0,0,0);
@@ -232,8 +210,8 @@ nav {
 .btn-gradient:hover {
   transform: translateY(-1px);
   background-image: linear-gradient(135deg, var(--g2), var(--g3));
-  border-color: rgba(255,255,255,0.25);
-  box-shadow: 0 10px 30px rgba(6, 182, 212, 0.15), 0 2px 6px rgba(0,0,0,0.25);
+  border-color: rgba(255,255,255,0.28);
+  box-shadow: 0 10px 34px rgba(6, 182, 212, 0.18), 0 2px 6px rgba(0,0,0,0.28);
 }
 
 /* Title stack */
@@ -241,13 +219,11 @@ nav {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  width: 100%;
+  width: min(92rem, 92vw);
   margin-top: auto;
   margin-bottom: 5vh;
   z-index: 1;
 }
-
-/* Hero Title */
 .hero-title {
   margin: 0;
   line-height: 0.9;
@@ -258,8 +234,6 @@ nav {
   font-size: clamp(6rem, 15vw, 16rem);
   white-space: nowrap;
 }
-
-/* Gradient text with subtle shimmer */
 .title-gradient {
   background-image: linear-gradient(90deg, var(--g1), var(--g2), var(--g3));
   background-size: 200% 100%;
@@ -293,16 +267,15 @@ nav {
   .nav-right a { display: none; }
   .nav-menu-toggle { display: inline-block; }
 }
-
 .mobile-menu {
   position: fixed;
   top: var(--nav-h);
   left: 0; right: 0;
   height: calc(100vh - var(--nav-h));
   background: radial-gradient(1200px 600px at 20% -10%, rgba(139,92,246,0.12), transparent),
-              radial-gradient(1200px 600px at 100% 0%, rgba(6,182,212,0.10), transparent),
+              radial-gradient(1200px 600px at 100% 0%, rgba(6,182,212,0.12), transparent),
               rgba(8,9,12,0.92);
-  border-top: 1px solid rgba(255,255,255,0.08);
+  border-top: 1px solid rgba(255,255,255,0.10);
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -311,18 +284,14 @@ nav {
   opacity: 0;
   pointer-events: none;
   transition: transform 200ms ease, opacity 200ms ease;
-  z-index: 9;
+  z-index: 19;
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
 }
 @supports (height: 100dvh) {
   .mobile-menu { height: calc(100dvh - var(--nav-h)); }
 }
-.mobile-menu.open {
-  transform: translateY(0);
-  opacity: 1;
-  pointer-events: auto;
-}
+.mobile-menu.open { transform: translateY(0); opacity: 1; pointer-events: auto; }
 .mobile-menu a {
   text-decoration: none;
   color: var(--text-light);
@@ -357,10 +326,10 @@ footer {
   padding: 1rem 2vw;
   font-family: 'Sono', monospace;
   font-size: 0.9rem;
-  border-top: 1px solid rgba(255,255,255,0.08);
+  border-top: 1px solid rgba(255,255,255,0.10);
   margin-top: 4rem;
   background:
-    linear-gradient(90deg, rgba(139,92,246,0.08), rgba(6,182,212,0.08), rgba(34,197,94,0.08));
+    linear-gradient(90deg, rgba(139,92,246,0.10), rgba(6,182,212,0.10), rgba(34,197,94,0.10));
 }
 
 /* =========================
@@ -374,10 +343,10 @@ footer {
     flex-direction: column-reverse;
     align-items: flex-start;
     gap: 1rem;
+    width: 92vw;
   }
   .btn { align-self: flex-start; }
 }
-
 @media (max-width: 480px) {
   nav { padding: 0 4vw; }
   .nav-right a { margin-left: 0.9rem; font-size: 0.95rem; }
@@ -395,7 +364,6 @@ footer {
   100% { background-position: 100% 0; }
 }
 
-/* Respect reduced motion */
 @media (prefers-reduced-motion: reduce) {
   .title-gradient { animation: none; }
   .nav-left { animation: none; }
