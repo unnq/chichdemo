@@ -103,7 +103,7 @@ nav {
   font-size: 0.95rem;
   line-height: 1;
   padding: 10px 14px;
-  border-radius: 8px;                       /* less round */
+  border-radius: 24px;                       /* less round */
   border: 1px solid var(--brand-blue);
   background: var(--brand-blue);
   color: white;
@@ -208,8 +208,8 @@ nav {
 /* CTA (same style as nav contact) */
 .btn-cta-lg{
   font-size: 0.96rem;
-  padding: 10px 16px;         /* smaller than before */
-  border-radius: 8px;         /* less round */
+  padding: 10px 16px;        
+  border-radius: 24px;        
   border: 1px solid var(--brand-blue);
   background: var(--brand-blue);
   color: white;
