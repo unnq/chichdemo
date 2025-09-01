@@ -4,27 +4,24 @@
   const host = document.querySelector('.hero-3d');
   if (!host) return;
 
-  // Helpers
   const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
   const TAU = Math.PI * 2;
 
-  // Punchy palette (falls back if CSS vars missing)
-  const palette = [
+  // High-pop palette (falls back if CSS vars missing)
+  const PALETTE = [
     css('--g1') || '#7c3aed', // violet
     css('--g2') || '#06b6d4', // cyan
     css('--g3') || '#22c55e', // mint
     css('--g4') || '#f59e0b', // amber
-    '#ef4444'                 // red accent to boost contrast
+    '#ef4444'                 // red accent
   ];
 
-  // Base fill — force dark so colors pop regardless of body bg
-  const bg = '#0b0b0e';
-
-  // Canvas
+  // Canvas (transparent)
   const canvas = document.createElement('canvas');
   canvas.style.display = 'block';
   canvas.style.width = '100%';
   canvas.style.height = '100%';
+  canvas.style.background = 'transparent';
   canvas.setAttribute('aria-hidden', 'true');
   host.appendChild(canvas);
 
@@ -43,7 +40,6 @@
   window.addEventListener('resize', resize, { passive: true });
   resize();
 
-  // Color utilities
   const hexToRgb = (hex) => {
     if (hex.startsWith('rgb')) {
       const m = hex.match(/(\d+),\s*(\d+),\s*(\d+)/);
@@ -59,61 +55,59 @@
     const { r,g,b } = hexToRgb(hex);
     return `rgba(${r},${g},${b},${a})`;
   };
-  const darken = (hex, f=0.7) => {
-    const { r,g,b } = hexToRgb(hex);
-    return `rgb(${(r*f)|0}, ${(g*f)|0}, ${(b*f)|0})`;
-  };
 
-  // Blob config factory
   function makeBlob(i, color) {
     const base = Math.min(w, h);
     return {
       color,
-      // Size & motion
-      R: base * (0.22 + 0.06 * (i % 3)),           // base radius
-      orbitAmpX: w * (0.12 + 0.04 * (i % 2)),
-      orbitAmpY: h * (0.10 + 0.05 * ((i+1) % 2)),
-      orbitSpeed: 0.2 + 0.08 * i,
-      orbitPhase: i * 1.3,
-      // Shape morph
-      segs: 28,                           // more segments = smoother edge
-      freq: 3 + (i % 3),                  // lobes around the ring
-      morphSpeed: 0.7 + 0.12 * i,         // how quickly shape wiggles
-      morphPhase: i * 2.1,
-      // Rendering
-      alpha: 0.85                         // strong, not see-through
+      R: base * (0.24 + 0.05 * (i % 3)),
+      orbitAmpX: w * (0.14 + 0.04 * (i % 2)),
+      orbitAmpY: h * (0.12 + 0.05 * ((i+1) % 2)),
+      orbitSpeed: 0.18 + 0.08 * i,
+      orbitPhase: i * 1.35,
+      segs: 60,                         // smoother silhouette
+      freq: 3 + (i % 3),
+      morphSpeed: 0.6 + 0.1 * i,
+      morphPhase: i * 2.0,
+      alpha: 0.95
     };
   }
 
   let blobs = [];
-
   function rebuild() {
     blobs = [];
-    for (let i = 0; i < Math.min(5, palette.length); i++) {
-      blobs.push(makeBlob(i, palette[i]));
+    for (let i = 0; i < Math.min(5, PALETTE.length); i++) {
+      blobs.push(makeBlob(i, PALETTE[i]));
     }
   }
   rebuild();
 
-  // Draw a single morphing, solid-color blob (no gradients)
+  const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+
   function drawBlob(t, cx, cy, b) {
     const pts = [];
-    const R = b.R * (1.0 + 0.03 * Math.sin(t*0.8 + b.morphPhase)); // slow breathing
+    const Rbase = b.R * (1.0 + 0.02 * Math.sin(t*0.7 + b.morphPhase)); // gentle breathe
+    const Rmin = Rbase * 0.78;  // clamp to avoid spikes
+    const Rmax = Rbase * 1.22;
 
     for (let k = 0; k < b.segs; k++) {
       const a = (k / b.segs) * TAU;
-      // Radial offset driven by a couple of sin terms for organic wobble
+
+      // Two-term wobble; lower amplitudes to keep edges round
       const rMod =
-        0.25 * Math.sin(b.freq * a + t * b.morphSpeed + b.morphPhase) +
-        0.12 * Math.cos((b.freq * 0.5) * a - t * (b.morphSpeed*0.7) + b.morphPhase*1.3);
-      const r = R * (1 + rMod);
+        0.18 * Math.sin(b.freq * a + t * b.morphSpeed + b.morphPhase) +
+        0.08 * Math.cos((b.freq * 0.5) * a - t * (b.morphSpeed*0.6) + b.morphPhase*1.1);
+
+      let r = Rbase * (1 + rMod);
+      r = clamp(r, Rmin, Rmax);
+
       pts.push({
         x: cx + Math.cos(a) * r,
         y: cy + Math.sin(a) * r
       });
     }
 
-    // Smooth closed path via quadratic curves between midpoints
+    // Smooth closed path via quadratic curves
     ctx.beginPath();
     for (let i = 0; i < pts.length; i++) {
       const p0 = pts[i];
@@ -125,36 +119,29 @@
     }
     ctx.closePath();
 
-    // Fill solid with additive mixing for overlap “pop”
-    ctx.globalCompositeOperation = 'lighter';
-    ctx.fillStyle = rgba(b.color, b.alpha);
-    ctx.fill();
-
-    // Optional crisp edge to “define” shapes (very subtle)
+    // Soft feather to prevent crunchy seams, no stroke
     ctx.save();
-    ctx.globalCompositeOperation = 'source-over';
-    ctx.lineWidth = Math.max(1, Math.min(2, Math.floor(Math.min(w,h) / 600)));
-    ctx.strokeStyle = rgba(darken(b.color, 0.7), 0.9);
-    ctx.stroke();
+    ctx.globalCompositeOperation = 'screen'; // smoother than 'lighter'
+    ctx.shadowColor = rgba(b.color, 0.6);
+    ctx.shadowBlur = 5;                      // tiny feather
+    ctx.fillStyle = rgba(b.color, b.alpha);  // solid, bright
+    ctx.fill();
     ctx.restore();
   }
 
   function frame(ts) {
-    const t = (ts || 0) * 0.001; // seconds
+    const t = (ts || 0) * 0.001;
 
-    // Paint dark base so blobs read with high contrast
+    // Transparent clear (no black base)
     ctx.clearRect(0, 0, w, h);
-    ctx.fillStyle = bg;
-    ctx.fillRect(0, 0, w, h);
 
-    // Center + orbits
     const cx = w * 0.5;
     const cy = h * 0.5;
 
     for (let i = 0; i < blobs.length; i++) {
       const b = blobs[i];
       const ox = Math.cos(t * b.orbitSpeed + b.orbitPhase) * b.orbitAmpX;
-      const oy = Math.sin(t * b.orbitSpeed * 0.83 + b.orbitPhase * 0.9) * b.orbitAmpY;
+      const oy = Math.sin(t * b.orbitSpeed * 0.85 + b.orbitPhase * 0.9) * b.orbitAmpY;
       drawBlob(t, cx + ox, cy + oy, b);
     }
 
@@ -162,7 +149,7 @@
   }
 
   if (prefersReduced) {
-    frame(0); // single static
+    frame(0);
   } else {
     requestAnimationFrame(frame);
   }
