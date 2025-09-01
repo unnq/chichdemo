@@ -38,7 +38,6 @@ html, body{
 
 /* Framer-style framed sections: light margins, vertical rhythm, borders */
 .section{
-  margin-block: 48px;
   border-top: 1px solid var(--hairline);
 }
 .section .section-inner{
