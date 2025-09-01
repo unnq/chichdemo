@@ -173,7 +173,7 @@ nav {
   width: min(92rem, 92vw);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   gap: clamp(1rem, 4vw, 3rem);
   margin-top: 5vh;
