@@ -42,7 +42,7 @@ html, body {
    Navbar (transparent, on top of hero)
    ========================= */
 nav {
-  position: sticky;   /* keeps it pinned while scrolling */
+  position: fixed;   /* keeps it pinned while scrolling */
   top: 0;
   z-index: 20;        /* higher than hero content */
   display: flex;
@@ -152,7 +152,7 @@ nav {
 /* Top-of-hero tagline */
 .hero-tagline {
   position: absolute;
-  top: 1.25rem;
+  top: 0;
   left: 0; right: 0;
   display: flex;
   justify-content: space-between;
