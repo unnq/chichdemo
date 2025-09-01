@@ -1,59 +1,54 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>sentiments — creative outreach</title>
-
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Sono:wght@400;600&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
-
-  <!-- Styles -->
-  <link rel="stylesheet" href="css/styles.css" />
-</head>
 <body>
 
   <!-- Navbar -->
   <nav>
-    <div class="nav-left">sentiments</div>
-    <div class="nav-right">
-      <a href="#">Services</a>
-      <a href="#">Client Work</a>
-      <a href="#">Contact</a>
-      <button class="nav-menu-toggle" type="button" aria-controls="mobile-menu" aria-expanded="false">
-        Menu
-      </button>
+    <div class="container nav-inner">
+      <div class="nav-left">sentiments</div>
+      <div class="nav-right">
+        <a href="#">Services</a>
+        <a href="#">Client Work</a>
+        <a href="#" class="btn-cta">Contact</a>
+        <button class="nav-menu-toggle" type="button" aria-controls="mobile-menu" aria-expanded="false">
+          Menu
+        </button>
+      </div>
     </div>
   </nav>
 
-  <!-- Mobile menu -->
+  <!-- Mobile menu (optional; style to match new light theme if you use it) -->
   <div id="mobile-menu" class="mobile-menu" hidden>
     <a href="#">Services</a>
     <a href="#">Client Work</a>
-    <a href="#">Contact</a>
+    <a href="#" class="btn-cta">Contact</a>
   </div>
 
   <!-- Hero -->
   <section class="hero">
-    <!-- animated gradient background lives here -->
+    <!-- animated gradient/blue-blob background lives here if you keep it -->
     <div class="hero-3d" aria-hidden="true"></div>
 
-   
-
-    <div class="hero-stack">
-      <h1 class="hero-title"><span class="title-gradient">sentiments</span></h1>
+    <!-- Tagline row: top-left/top-center/top-right (datetime) -->
+    <div class="hero-tagline">
+      <div class="tag-left">creative outreach</div>
+      <div class="tag-center">sentiments</div>
+      <div class="tag-right" id="tagline-datetime"></div>
     </div>
 
-    <div class="hero-buttons">
-      <a href="#" class="btn btn-gradient">See what we do ↲</a>
-      <p class="hero-subtitle">
-        We craft bold, minimal campaigns that resonate deeply. (Placeholder text)
-      </p>
+    <!-- Core content -->
+    <div class="hero-core">
+      <div class="hero-grid">
+        <h1 class="hero-title">sentiments</h1>
+
+        <div class="hero-row">
+          <p class="hero-subtitle">
+            We craft bold, minimal campaigns that resonate deeply. (Placeholder text)
+          </p>
+          <a href="#" class="btn-cta-lg">See what we do ↲</a>
+        </div>
+      </div>
     </div>
 
-    
-
+    <!-- Scroll indicator (kept) -->
     <div class="scroll-indicator">
       <span class="asterisk-left">*</span>
       <span class="scroll-text">Scroll to explore</span>
@@ -61,21 +56,46 @@
     </div>
   </section>
 
+  <!-- Example content sections with framed edges + horizontal separators -->
+  <section class="section">
+    <div class="section-inner container">
+      <h2>Section One</h2>
+      <p>Use this pattern for each section—slight inset borders left/right and a top separator.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-inner container">
+      <h2>Section Two</h2>
+      <p>Grid everything you can: image/text columns, cards, etc.</p>
+    </div>
+  </section>
+
   <!-- Footer -->
   <footer>
-    <div class="footer-left">sentiments</div>
-    <div class="footer-center"></div>
-    <div class="footer-right">
-      <span id="datetime"></span>
+    <div class="footer-inner container">
+      <div class="footer-left">sentiments</div>
+      <div class="footer-center"></div>
+      <div class="footer-right"><span id="datetime"></span></div>
     </div>
   </footer>
 
-  <!-- Existing utilities -->
+  <!-- Scripts -->
   <script src="js/datetime.js" defer></script>
-  <script src="js/noise.js" defer></script>
+  <!-- If "noise.js" added a static effect to the logo, you can remove it entirely now. -->
   <script src="js/menu.js" defer></script>
-
-  <!-- New lightweight gradient animator -->
   <script src="js/gradient-hero.js" defer></script>
+
+  <!-- Small helper to mirror datetime into the tagline's right slot -->
+  <script defer>
+    (function mirrorDatetime(){
+      const footerEl = document.getElementById('datetime');
+      const tagEl = document.getElementById('tagline-datetime');
+      if(!footerEl || !tagEl) return;
+      const sync = () => { tagEl.textContent = footerEl.textContent; };
+      const obs = new MutationObserver(sync);
+      obs.observe(footerEl, {childList:true, characterData:true, subtree:true});
+      sync();
+    })();
+  </script>
 </body>
-</html>
