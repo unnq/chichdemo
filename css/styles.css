@@ -57,9 +57,6 @@ nav{
   height: var(--nav-h);
   background: var(--bg-light);
   border-bottom: 1px solid var(--hairline);
-
-  display:flex;
-  align-items:center;
 }
 
 .nav-inner{
