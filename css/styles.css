@@ -50,21 +50,22 @@ html, body{
 /* =========================
    Navbar (sticky, light, simple)
    ========================= */
-nav{
+nav {
   position: sticky;
   top: 0;
   z-index: 50;
-  height: var(--nav-h);
   background: var(--bg-light);
   border-bottom: 1px solid var(--hairline);
 }
 
-.nav-inner{
-  display:flex;
+/* nav-inner controls vertical padding + flex alignment */
+.nav-inner {
+  display: flex;
   justify-content: space-between;
-  align-items:center;
+  align-items: center;
   gap: 20px;
-  padding-inline: clamp(16px, 3vw, 28px); /* side padding */
+  padding-block: 18px;  /* adjust until it feels right */
+  padding-inline: clamp(16px, 3vw, 28px);
 }
 
 .nav-left{
