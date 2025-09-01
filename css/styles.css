@@ -150,7 +150,6 @@ nav{
   font-size: 0.85rem;
   letter-spacing: -0.02rem;
   padding: 10px var(--container-pad);
-  border-bottom: 1px solid var(--hairline);
 }
 .hero-tagline .tag-left{ justify-self:start; opacity:0.8; }
 .hero-tagline .tag-center{ justify-self:center; font-weight:600; }
@@ -229,7 +228,6 @@ nav{
   font-size:0.85rem;
   letter-spacing:-0.02rem;
   padding: 8px var(--container-pad);
-  border-top: 1px solid var(--hairline);
 }
 .scroll-text{ text-align:center; flex:1; }
 .asterisk-left, .asterisk-right{ font-weight:600; }
