@@ -2,8 +2,8 @@
    Base + Design Tokens
    ========================= */
 :root {
-  --bg-dark: #07080b;                 /* slightly deeper for contrast */
-  --text-light: #f5f7fb;
+  --bg-dark: #9d9d9d;                 /* slightly deeper for contrast */
+  --text-light: #2c2d2e;
 
   /* Vibrant gradient system (kept, but will pop more due to higher alpha in JS) */
   --g1: #8b5cf6; /* violet */
@@ -49,6 +49,7 @@ nav {
   justify-content: space-between;
   align-items: center;
   height: var(--nav-h);
+  width: 100vw;
   padding: 0 2vw;
   background: transparent;  /* << transparent so gradient shows through */
 }
