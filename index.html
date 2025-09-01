@@ -1,3 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>sentiments — creative outreach</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Sono:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
 <body>
 
   <!-- Navbar -->
@@ -15,7 +29,7 @@
     </div>
   </nav>
 
-  <!-- Mobile menu (optional; style to match new light theme if you use it) -->
+  <!-- Mobile menu -->
   <div id="mobile-menu" class="mobile-menu" hidden>
     <a href="#">Services</a>
     <a href="#">Client Work</a>
@@ -24,10 +38,10 @@
 
   <!-- Hero -->
   <section class="hero">
-    <!-- animated gradient/blue-blob background lives here if you keep it -->
+    <!-- Optional animated background (can be your blue blob or gradient) -->
     <div class="hero-3d" aria-hidden="true"></div>
 
-    <!-- Tagline row: top-left/top-center/top-right (datetime) -->
+    <!-- Tagline row -->
     <div class="hero-tagline">
       <div class="tag-left">creative outreach</div>
       <div class="tag-center">sentiments</div>
@@ -48,7 +62,7 @@
       </div>
     </div>
 
-    <!-- Scroll indicator (kept) -->
+    <!-- Scroll indicator -->
     <div class="scroll-indicator">
       <span class="asterisk-left">*</span>
       <span class="scroll-text">Scroll to explore</span>
@@ -56,7 +70,7 @@
     </div>
   </section>
 
-  <!-- Example content sections with framed edges + horizontal separators -->
+  <!-- Example content sections -->
   <section class="section">
     <div class="section-inner container">
       <h2>Section One</h2>
@@ -82,11 +96,11 @@
 
   <!-- Scripts -->
   <script src="js/datetime.js" defer></script>
-  <!-- If "noise.js" added a static effect to the logo, you can remove it entirely now. -->
+  <!-- Remove noise.js since the logo effect is gone -->
   <script src="js/menu.js" defer></script>
   <script src="js/gradient-hero.js" defer></script>
 
-  <!-- Small helper to mirror datetime into the tagline's right slot -->
+  <!-- Mirror footer datetime into tagline datetime -->
   <script defer>
     (function mirrorDatetime(){
       const footerEl = document.getElementById('datetime');
@@ -99,3 +113,5 @@
     })();
   </script>
 </body>
+</html>
+
