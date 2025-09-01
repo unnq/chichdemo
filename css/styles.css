@@ -124,7 +124,7 @@ nav {
    ========================= */
 .hero {
   position: relative;
-  height: calc(100vh - var(--nav-h));
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
