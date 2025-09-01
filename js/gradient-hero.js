@@ -55,11 +55,11 @@
     vec2 c4 = orbit(t, 0.20, 0.16, 0.26, 5.1);
 
     // Radii (in UV space)
-    float r0 = 0.36;
-    float r1 = 0.34;
-    float r2 = 0.32;
-    float r3 = 0.45;
-    float r4 = 0.30;
+    float r0 = 0.66;
+    float r1 = 0.74;
+    float r2 = 0.62;
+    float r3 = 0.75;
+    float r4 = 0.70;
 
     // Field contributions (Gaussian-ish)
     float w0 = exp(-dot(uv - c0, uv - c0) / (r0*r0));
