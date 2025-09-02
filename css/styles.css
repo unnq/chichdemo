@@ -295,11 +295,21 @@ footer{
 
 
 
-/* Mobile: stack the date/time and top-align the whole row */
+/* mobile: honor newlines and right-align */
 @media (max-width: 640px) {
-  .hero-tagline {
-    align-items: start;       /* top-align all three cells */
+  .hero-tagline { 
+     align-items: start;        /* top-align the grid row */
+  } 
+   
+  .tag-left, .tag-center, .tag-right { 
+     align-self: start; 
   }
+  .tag-right {
+    white-space: pre-line;                      /* turn \n into line breaks */
+    text-align: right;
+    line-height: 1.1;
+  }
+}
 
   .tag-left,
   .tag-center,
@@ -313,6 +323,7 @@ footer{
     align-items: flex-end;    /* right edge */
     line-height: 1.1;
     gap: 2px;
+    white-space: nowrap;
   }
 
   .tag-right .dt-day,
