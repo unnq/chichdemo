@@ -293,12 +293,7 @@ footer{
   display: inline;
 }
 
-/* Tagline alignment — center by default */
-.hero-tagline {
-  display: grid; /* you already have this */
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center; /* default */
-}
+
 
 /* Mobile: stack the date/time and top-align the whole row */
 @media (max-width: 640px) {
