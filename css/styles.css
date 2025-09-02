@@ -458,3 +458,48 @@ footer{
 .halftone-base   { opacity: .12; }  /* broader edge texture */
 .halftone-ripple { opacity: .65; }  /* slightly stronger pass */
 
+/* =========================
+   Services (minimal menu grid)
+   ========================= */
+.services .services-grid{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(10px, 2.8vw, 28px);
+}
+
+.services .service-item{
+  display: flex;               /* two elements: name + arrow */
+  align-items: baseline;
+  gap: 12px;
+  padding: clamp(10px, 2.2vw, 18px) clamp(12px, 2.4vw, 20px);
+  min-height: 56px;            /* consistent cell feel without looking like “cards” */
+  background: transparent;     /* keep it ultra minimal */
+  border: none;                 /* no dividers per your choice */
+}
+
+.services .s-name{
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text-dark);
+}
+
+.services .s-arrow{
+  margin-left: auto;           /* pushes arrow to the far right */
+  font-size: 1rem;
+  line-height: 1;
+  opacity: 0.55;               /* subtle; keeps focus on the word */
+  user-select: none;
+}
+
+/* Responsive columns */
+@media (max-width: 1000px){
+  .services .services-grid{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 640px){
+  .services .services-grid{
+    grid-template-columns: 1fr;
+  }
+}
