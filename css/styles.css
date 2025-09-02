@@ -118,7 +118,7 @@ nav {
 
 /* ensure CTA text is light before hover (and after visit) */
 .nav-right .btn-cta {
-  color: #fff); /* or var(--text-on-blue) if you add it */
+  color: var(--bg-light); /* white text on blue button background */
 }
 
 /* Mobile nav toggle */
