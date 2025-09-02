@@ -243,7 +243,6 @@ nav {
   font-family:'Sono', monospace;
   font-size:0.85rem;
   letter-spacing:-0.02rem;
-  padding: 8px var(--container-pad);
 }
 .scroll-text{ text-align:center; flex:1; }
 .asterisk-left, .asterisk-right{ font-weight:600; }
