@@ -116,6 +116,11 @@ nav {
   outline: none;
 }
 
+/* ensure CTA text is light before hover (and after visit) */
+.nav-right .btn-cta {
+  color: #fff); /* or var(--text-on-blue) if you add it */
+}
+
 /* Mobile nav toggle */
 .nav-menu-toggle{
   display:none;
