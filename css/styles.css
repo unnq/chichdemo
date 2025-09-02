@@ -286,34 +286,28 @@ footer{
   .btn-cta{ transition: none; }
 }
 
-/* --- Datetime (newline strategy) --- */
+/* --- Datetime --- */
 
-/* Desktop/tablet: keep one line by default */
-.tag-right { 
-  white-space: nowrap; 
+/* Ensure each cell hugs the top */
+.tag-left, .tag-center, .tag-right { align-self: start; }
+.tag-center { justify-self: center; }
+
+/* Stack the Day / Date / Time on all viewports */
+.tag-right{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;        /* keep right-aligned */
+  line-height: 1.1;
+  gap: 2px;
 }
 
-/* Optional: if you’re also writing three spans for desktop styling,
-   you can leave these as inline. If not using spans, this does nothing. */
 .tag-right .dt-day,
 .tag-right .dt-date,
-.tag-right .dt-time {
-  display: inline;
-}
+.tag-right .dt-time { display: block; }
 
-/* Mobile: stack via newlines and top-align the row */
+/* (Optional) Slightly reduce font size on small screens for the stack */
 @media (max-width: 640px) {
-  .hero-tagline { 
-    align-items: start;       /* top-align the three grid cells */
-  }
-  .tag-left, .tag-center, .tag-right { 
-    align-self: start; 
-  }
-  .tag-right {
-    white-space: pre-line;    /* turns \n into line breaks */
-    text-align: right;
-    line-height: 1.1;
-  }
+  .tag-right { font-size: 0.9em; }
 }
 
 
