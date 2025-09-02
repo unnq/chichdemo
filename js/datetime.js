@@ -88,14 +88,12 @@
   if (footerEl) footerEl.textContent = nowText;
 
   // Update tagline (structured spans for CSS control)
+  // inside tick()
   if (tagEl) {
-    const parts = getNowParts(); // helper below
-    tagEl.innerHTML = `
-      <span class="dt-day">${parts.weekday}</span>
-      <span class="dt-date">${parts.month} ${parts.day}, ${parts.year}</span>
-      <span class="dt-time">${parts.time}</span>
-    `;
-  }
+    const p = getNowParts(); // same helper from before
+    const stacked = `${p.weekday}\n${p.month} ${p.day}, ${p.year}\n${p.time}`;
+    tagEl.textContent = stacked;  // newline-separated for CSS to render
+   }
 }
 
   // Initial paint
