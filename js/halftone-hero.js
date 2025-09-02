@@ -9,8 +9,8 @@
     pitch: 7,         // px between dot centers (visual density)
     minR:  0.28,      // min dot radius near center
     maxR:  1.5,      // max dot radius near edges
-    edgePower: 3.35,  // edge falloff curve; higher = heavier edges
-    swellAmp: 0.45    // subtle local variation; set to 0 to disable “swells”
+    edgePower: 2.35,  // edge falloff curve; higher = heavier edges  - default 3.35
+    swellAmp: 0.85    // subtle local variation; set to 0 to disable “swells” - default 0.45
   };
 
   const debounce = (fn, ms)=>{ let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a), ms); }; };
