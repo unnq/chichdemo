@@ -425,5 +425,48 @@ footer{
   .btn-cta-lg::after { animation: none !important; opacity: 0 !important; }
 }
 
+/* =========================
+   Halftone overlay layers
+   ========================= */
+.halftone-base,
+.halftone-ripple{
+  position: absolute;
+  inset: 0;
+  z-index: 0;              /* below .hero-tagline / .hero-core / .scroll-indicator (z:1) */
+  pointer-events: none;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  /* Optional if you like the way it blends with bg/text:
+     mix-blend-mode: multiply; */
+}
+
+/* Opacities requested */
+.halftone-base   { opacity: .12; }
+.halftone-ripple { opacity: .35; }
+
+/* Ripple gets the SVG displacement filter + a soft edge-weighted mask
+   so the center stays subtle and edges ‘breathe’. */
+.halftone-ripple{
+  filter: url(#rippleDisp);
+  /* Edge-heavier visibility; keeps center lighter */
+  -webkit-mask-image: radial-gradient(circle at 50% 55%,
+      rgba(0,0,0,0.05) 0%,
+      rgba(0,0,0,0.12) 35%,
+      rgba(0,0,0,0.35) 60%,
+      rgba(0,0,0,0.70) 80%,
+      rgba(0,0,0,1)    100%);
+  mask-image: radial-gradient(circle at 50% 55%,
+      rgba(0,0,0,0.05) 0%,
+      rgba(0,0,0,0.12) 35%,
+      rgba(0,0,0,0.35) 60%,
+      rgba(0,0,0,0.70) 80%,
+      rgba(0,0,0,1)    100%);
+}
+
+/* Reduced-motion: keep the graphic but stop the flutter */
+@media (prefers-reduced-motion: reduce){
+  .halftone-ripple{ filter: none; }
+}
 
 
