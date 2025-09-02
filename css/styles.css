@@ -47,7 +47,7 @@ html, body{
   margin-inline: clamp(8px, 3vw, 24px);
   border-left: 1px solid var(--hairline);
   border-right: 1px solid var(--hairline);
-  padding: clamp(16px, 3vw, 28px);
+  padding: clamp(10px, 3vw, 28px);
 }
 
 /* =========================
