@@ -209,7 +209,6 @@ nav {
   max-width: 60ch;
   font-weight:600;
   font-size: clamp(1.4rem, 2.6vw, 3.15rem);
-  padding: 16px;
   line-height:1.35;
 }
 
