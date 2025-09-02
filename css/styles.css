@@ -98,7 +98,7 @@ nav {
 /* Contact button shares CTA styling */
 .btn-cta{
   display:inline-block;
-  font-weight:700;
+  font-weight:500;
   font-size: 0.95rem;
   line-height: 1;
   padding: 10px 14px;
@@ -220,7 +220,7 @@ nav {
   background: var(--brand-blue);
   color: white;
   text-decoration: none;
-  font-weight: 800;
+  font-weight: 500;
   justify-self: start;
   transition: background 160ms ease, color 160ms ease, border-color 160ms ease, transform 120ms ease;
 }
