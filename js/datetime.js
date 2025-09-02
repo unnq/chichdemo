@@ -82,19 +82,28 @@
 
    
   function tick() {
-  const nowText = formatNow(); // your existing formatted single line
-
-  // Update footer (single line)
+  // Single-line for footer
+  const nowText = formatNow();
   if (footerEl) footerEl.textContent = nowText;
 
-  // Update tagline (structured spans for CSS control)
-  // inside tick()
+  // Structured spans for tagline
   if (tagEl) {
-    const p = getNowParts(); // same helper from before
-    const stacked = `${p.weekday}\n${p.month} ${p.day}, ${p.year}\n${p.time}`;
-    tagEl.textContent = stacked;  // newline-separated for CSS to render
-   }
+    const p = getNowParts();
+    const day  = tagEl.querySelector('.dt-day');
+    const date = tagEl.querySelector('.dt-date');
+    const time = tagEl.querySelector('.dt-time');
+
+    if (day && date && time) {
+      day.textContent  = p.weekday;
+      date.textContent = `${p.month} ${p.day}, ${p.year}`;
+      time.textContent = p.time;
+    } else {
+      // Fallback if spans are missing
+      tagEl.textContent = `${p.weekday} • ${p.month} ${p.day}, ${p.year} — ${p.time}`;
+    }
+  }
 }
+
 
   // Initial paint
   tick();
