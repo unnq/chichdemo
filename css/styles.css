@@ -95,7 +95,7 @@ nav {
 /* ensure CTA text is light before hover (and after visit) */
 .nav-right .btn-cta,
 .nav-right .btn-cta:visited{
-  color: #fff; /* or var(--text-on-blue) if you add it */
+  color: var(--brand-blue); /* or var(--text-on-blue) if you add it */
 }
 
 /* Contact button shares CTA styling */
