@@ -10,7 +10,7 @@
     minR:  0.28,      // min dot radius near center
     maxR:  1.5,      // max dot radius near edges
     edgePower: 2.35,  // edge falloff curve; higher = heavier edges
-    swellAmp: 0.45    // subtle local variation; set to 0 to disable “swells”
+    swellAmp: 0.25    // subtle local variation; set to 0 to disable “swells”
   };
 
   const debounce = (fn, ms)=>{ let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a), ms); }; };
