@@ -15,7 +15,7 @@
 
   // Basic formatter (e.g., "Mon • Sep 1, 2025 — 11:07 AM")
   const fmt = new Intl.DateTimeFormat(undefined, {
-    weekday: 'short',
+    weekday: 'long',
     month: 'short',
     day: 'numeric',
     year: 'numeric',
