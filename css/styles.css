@@ -204,10 +204,12 @@ nav {
   align-items: center;
   gap: clamp(16px, 4vw, 32px);
 }
+
 .hero-subtitle{
   max-width: 60ch;
   font-weight:600;
-  font-size: clamp(1rem, 1.2vw, 1.15rem);
+  font-size: clamp(1.4rem, 2.2vw, 3.15rem);
+  padding: 16px;
   line-height:1.35;
 }
 
