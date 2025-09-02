@@ -4,9 +4,14 @@
 :root{
   --bg-light: #f2f1f0;           /* site background */
   --text-dark: #2c2d2e;          /* body text */
-  --brand-blue: #3b82f6;         /* same as the blue blob */
-  --hairline: rgba(0,0,0,0.10);  /* for borders on light UI */
+  --g1:#8b5cf6; 
+  --g2:#06b6d4; 
+  --g3:#22c55e; 
+  --g4:#f59e0b;
   --g5: #ec4899; 
+  --brand-blue: #3b82f6;         
+   
+  --hairline: rgba(0,0,0,0.10);  /* for borders on light UI */
 
  --font-sans: "Inter", Arial, sans-serif;
 
@@ -14,8 +19,6 @@
   --container-max: 1200px;
   --container-pad: clamp(16px, 3vw, 28px);
 
-  /* old gradient tokens kept if your hero bg needs them later */
-  --g1:#8b5cf6; --g2:#06b6d4; --g3:#22c55e; --g4:#f59e0b;
 }
 
 *{ box-sizing:border-box; }
