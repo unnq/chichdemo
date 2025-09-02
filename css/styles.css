@@ -200,9 +200,8 @@ nav {
 
 /* Sub + CTA row */
 .hero-row{
-  display:grid;
-  grid-template-columns: minmax(240px, 1fr) auto;
-  align-items:center;
+  display: grid;
+  align-items: center;
   gap: clamp(16px, 4vw, 32px);
 }
 .hero-subtitle{
