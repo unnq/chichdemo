@@ -208,7 +208,7 @@ nav {
 .hero-subtitle{
   max-width: 60ch;
   font-weight:600;
-  font-size: clamp(1.4rem, 2.2vw, 3.15rem);
+  font-size: clamp(1.4rem, 2.6vw, 3.15rem);
   padding: 16px;
   line-height:1.35;
 }
@@ -456,5 +456,5 @@ footer{
 
 /* keep these subtle, as requested */
 .halftone-base   { opacity: .12; }  /* broader edge texture */
-.halftone-ripple { opacity: .35; }  /* slightly stronger pass */
+.halftone-ripple { opacity: .65; }  /* slightly stronger pass */
 
