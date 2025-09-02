@@ -488,7 +488,7 @@ footer{
   margin-left: auto;           /* pushes arrow to the far right */
   font-size: 1rem;
   line-height: 1;
-  opacity: 0.55;               /* subtle; keeps focus on the word */
+  opacity: 0.85;               /* subtle; keeps focus on the word */
   user-select: none;
 }
 
