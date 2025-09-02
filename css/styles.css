@@ -42,7 +42,8 @@ html, body{
 .section{
   border-top: 1px solid var(--hairline);
 }
-.section .section-inner{
+
+.section-inner{
   margin-inline: clamp(8px, 3vw, 24px);
   border-left: 1px solid var(--hairline);
   border-right: 1px solid var(--hairline);
