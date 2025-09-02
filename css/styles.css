@@ -47,7 +47,7 @@ html, body{
   margin-inline: clamp(8px, 3vw, 24px);
   border-left: 1px solid var(--hairline);
   border-right: 1px solid var(--hairline);
-  padding: clamp(10px, 3vw, 28px);
+  padding: clamp(10px, 3vw, 16px);
 }
 
 /* =========================
@@ -166,7 +166,6 @@ nav {
   font-family: 'Sono', monospace;
   font-size: 0.85rem;
   letter-spacing: -0.02rem;
-  padding: 10px var(--container-pad);
 }
 .hero-tagline .tag-left{ justify-self:start; opacity:0.8; }
 .hero-tagline .tag-center{ justify-self:center; font-weight:600; }
