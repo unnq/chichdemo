@@ -473,7 +473,7 @@ footer{
   letter-spacing: 0.05em;
   display: flex;
   align-items: flex-start;
-  padding-top: 0.4rem;
+  padding: clamp(10px, 2.2vw, 30px);
   border-right: 1px dashed var(--hairline);
 }
 
@@ -481,14 +481,15 @@ footer{
 .services-grid{
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(10px, 2.8vw, 28px);
+  gap: clamp(10px, 2vw, 16px);
+  padding: clamp(10px, 2.2vw, 20px);
 }
 
 .service-item{
   display: flex;
   align-items: baseline;
   gap: 12px;
-  padding: clamp(10px, 2vw, 18px) 0;
+  padding: clamp(10px, 2vw, 10px) 0;
 }
 
 .s-name{
