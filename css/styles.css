@@ -84,7 +84,10 @@ nav {
   gap: 20px;
 }
 
-
+.nav-right a{
+  text-decoration:none;
+  font-size: 0.98rem;
+}
 
 .nav-right a:not(.btn-cta){
   color: var(--text-dark);
