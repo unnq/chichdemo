@@ -371,3 +371,55 @@ footer{
 .tag-left .tl-line:nth-child(2) { animation-delay: 0.25s; }
 .tag-left .tl-line:nth-child(3) { animation-delay: 0.4s; }
 
+/* ===== Scroll indicator entrance (CSS-only) ===== */
+
+/* Keyframes */
+@keyframes slideUpFade {
+  from { transform: translateY(18px); opacity: 0; }
+  to   { transform: translateY(0);   opacity: 1; }
+}
+@keyframes sideSpinLeft {
+  from { transform: translateX(-24px) rotate(-90deg); opacity: 0; }
+  60%  { opacity: 1; }
+  to   { transform: translateX(0) rotate(0deg);       opacity: 1; }
+}
+@keyframes sideSpinRight {
+  from { transform: translateX(24px) rotate(90deg); opacity: 0; }
+  60%  { opacity: 1; }
+  to   { transform: translateX(0) rotate(0deg);     opacity: 1; }
+}
+
+/* Make sure the stars can transform */
+.asterisk-left,
+.asterisk-right,
+.scroll-text {
+  will-change: transform, opacity;
+}
+
+/* Play-once on load */
+.scroll-text {
+  animation: slideUpFade 0.7s ease-out 0.15s both;
+}
+.asterisk-left,
+.asterisk-right {
+  display: inline-block; /* needed for transforms on inline text */
+}
+.asterisk-left {
+  animation: sideSpinLeft 0.7s cubic-bezier(.22,1,.36,1) 0.05s both;
+}
+.asterisk-right {
+  animation: sideSpinRight 0.7s cubic-bezier(.22,1,.36,1) 0.25s both;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-text,
+  .asterisk-left,
+  .asterisk-right {
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+
+
