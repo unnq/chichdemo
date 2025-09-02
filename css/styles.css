@@ -303,6 +303,21 @@ footer{
 .tag-right .dt-date,
 .tag-right .dt-time { display: block; }
 
+/* --- Tag-left stack --- */
+.tag-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;   /* left edge */
+  line-height: 1.1;
+  gap: 2px;
+  opacity: 0.8;              /* same subtle style you already had */
+}
+
+.tag-left .tl-line {
+  display: block;
+}
+
+
 /* (Optional) Slightly reduce font size on small screens for the stack */
 @media (max-width: 640px) {
   .tag-right { font-size: 0.9em; }
