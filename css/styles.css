@@ -493,7 +493,7 @@ footer{
   display: flex;
   align-items: baseline;
   gap: 12px;
-  padding: clamp(10px, 2vw, 10px) 0;
+  padding: clamp(10px, 2vw, 10px) clamp(10px, 2vw, 10px);
 }
 
 .s-name{
