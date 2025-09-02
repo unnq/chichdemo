@@ -57,11 +57,46 @@
     return `${dateStr}${SEP_MAIN}${timeStr}`;
   }
 
+  function getNowParts() {
+  const now = new Date();
+  const p = fmt.formatToParts(now);
+  const obj = {};
+  for (const x of p) obj[x.type] = x.value;
+
+  const weekday = obj.weekday || '';
+  const month   = obj.month || '';
+  const day     = obj.day || '';
+  const year    = obj.year || '';
+  const hour    = obj.hour || '';
+  const minute  = obj.minute || '';
+  const dayPeriod = obj.dayPeriod || '';
+
+  return {
+    weekday,
+    month,
+    day,
+    year,
+    time: dayPeriod ? `${hour}:${minute} ${dayPeriod}` : `${hour}:${minute}`
+  };
+}
+
+   
   function tick() {
-    const text = formatNow();
-    if (footerEl) footerEl.textContent = text;
-    if (tagEl) tagEl.textContent = text;
+  const nowText = formatNow(); // your existing formatted single line
+
+  // Update footer (single line)
+  if (footerEl) footerEl.textContent = nowText;
+
+  // Update tagline (structured spans for CSS control)
+  if (tagEl) {
+    const parts = getNowParts(); // helper below
+    tagEl.innerHTML = `
+      <span class="dt-day">${parts.weekday}</span>
+      <span class="dt-date">${parts.month} ${parts.day}, ${parts.year}</span>
+      <span class="dt-time">${parts.time}</span>
+    `;
   }
+}
 
   // Initial paint
   tick();
