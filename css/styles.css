@@ -244,6 +244,9 @@ nav {
   font-family:'Sono', monospace;
   font-size:0.85rem;
   letter-spacing:-0.02rem;
+  padding: 16px;
+  border-radius: 16px;
+  background-color: #f2f1f096;
 }
 .scroll-text{ text-align:center; flex:1; }
 .asterisk-left, .asterisk-right{ font-weight:600; }
