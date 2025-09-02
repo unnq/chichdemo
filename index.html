@@ -106,18 +106,7 @@
   <script src="js/menu.js" defer></script>
   <script src="js/gradient-hero.js" defer></script>
 
-  <!-- Mirror footer datetime into tagline datetime -->
-  <script defer>
-    (function mirrorDatetime(){
-      const footerEl = document.getElementById('datetime');
-      const tagEl = document.getElementById('tagline-datetime');
-      if(!footerEl || !tagEl) return;
-      const sync = () => { tagEl.textContent = footerEl.textContent; };
-      const obs = new MutationObserver(sync);
-      obs.observe(footerEl, {childList:true, characterData:true, subtree:true});
-      sync();
-    })();
-  </script>
+  
 </body>
 </html>
 
