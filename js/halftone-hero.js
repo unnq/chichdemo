@@ -8,7 +8,7 @@
   const DEFAULTS   = {
     pitch: 6,         // px between dot centers (visual density)
     minR:  0.28,      // min dot radius near center
-    maxR:  1.75,      // max dot radius near edges
+    maxR:  1.5,      // max dot radius near edges
     edgePower: 1.35,  // edge falloff curve; higher = heavier edges
     swellAmp: 0.20    // subtle local variation; set to 0 to disable “swells”
   };
