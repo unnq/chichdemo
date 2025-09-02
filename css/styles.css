@@ -458,48 +458,70 @@ footer{
 .halftone-base   { opacity: .12; }  /* broader edge texture */
 .halftone-ripple { opacity: .65; }  /* slightly stronger pass */
 
-/* =========================
-   Services (minimal menu grid)
-   ========================= */
-.services .services-grid{
+/* Layout for label + grid split */
+.services-layout{
+  display: grid;
+  grid-template-columns: 1fr 3fr;   /* 25% / 75% split */
+  gap: clamp(16px, 3vw, 32px);
+}
+
+/* Left label column */
+.services-label{
+  font-family: 'Sono', monospace;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: flex-start;
+  padding-top: 0.4rem;
+  border-right: 1px dashed var(--hairline);
+}
+
+/* Right services grid */
+.services-grid{
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(10px, 2.8vw, 28px);
 }
 
-.services .service-item{
-  display: flex;               /* two elements: name + arrow */
+.service-item{
+  display: flex;
   align-items: baseline;
   gap: 12px;
-  padding: clamp(10px, 2.2vw, 18px) clamp(12px, 2.4vw, 20px);
-  min-height: 56px;            /* consistent cell feel without looking like “cards” */
-  background: transparent;     /* keep it ultra minimal */
-  border: none;                 /* no dividers per your choice */
+  padding: clamp(10px, 2vw, 18px) 0;
 }
 
-.services .s-name{
+.s-name{
   font-size: 1.05rem;
   font-weight: 600;
-  letter-spacing: -0.01em;
   color: var(--text-dark);
 }
 
-.services .s-arrow{
-  margin-left: auto;           /* pushes arrow to the far right */
-  font-size: 1rem;
-  line-height: 1;
-  opacity: 0.85;               /* subtle; keeps focus on the word */
+.s-arrow{
+  margin-left: auto;
+  opacity: 0.55;
   user-select: none;
 }
 
-/* Responsive columns */
+/* responsive tweaks */
 @media (max-width: 1000px){
-  .services .services-grid{
+  .services-grid{
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
-@media (max-width: 640px){
-  .services .services-grid{
+@media (max-width: 700px){
+  .services-layout{
+    grid-template-columns: 1fr;  /* stack */
+  }
+  .services-label{
+    border-right: none;
+    border-bottom: 1px dashed var(--hairline);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+  }
+  .services-grid{
     grid-template-columns: 1fr;
   }
 }
+
