@@ -83,11 +83,8 @@ nav {
   align-items:center;
   gap: 20px;
 }
-.nav-right a{
-  text-decoration:none;
-  color: var(--text-dark);
-  font-size: 0.98rem;
-}
+
+
 
 .nav-right a:not(.btn-cta){
   color: var(--text-dark);
@@ -142,7 +139,7 @@ nav {
    ========================= */
 .hero{
   position: relative;
-  min-height: calc(86vh - var(--nav-h));
+  min-height: 86vh;
   display: grid;
   grid-template-rows: auto 1fr auto; /* tagline / core / scroll-indicator */
   isolation:isolate;
