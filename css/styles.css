@@ -270,6 +270,12 @@ footer{
   .nav-right a:not(.btn-cta){ display:none; }
   .nav-menu-toggle{ display:inline-block; }
 
+  .section-inner{
+     border-left: 1px solid var(--hairline);
+     border-right: 1px solid var(--hairline);
+     padding: clamp(10px, 3vw, 16px);
+   }
+   
   .hero{
      min-height: 82vh;
   }
