@@ -122,6 +122,10 @@ nav {
   color: var(--bg-light); /* white text on blue button background */
 }
 
+.nav-right .btn-cta:hover {
+  color: var(--brand-blue); /* white text on blue button background */
+}
+
 /* Mobile nav toggle */
 .nav-menu-toggle{
   display:none;
