@@ -285,3 +285,45 @@ footer{
   .btn-cta-lg{ transition: none; }
   .btn-cta{ transition: none; }
 }
+
+/* Default (desktop/tablet): keep it inline */
+.tag-right .dt-day,
+.tag-right .dt-date,
+.tag-right .dt-time {
+  display: inline;
+}
+
+/* Tagline alignment — center by default */
+.hero-tagline {
+  display: grid; /* you already have this */
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center; /* default */
+}
+
+/* Mobile: stack the date/time and top-align the whole row */
+@media (max-width: 640px) {
+  .hero-tagline {
+    align-items: start;       /* top-align all three cells */
+  }
+
+  .tag-left,
+  .tag-center,
+  .tag-right {
+    align-self: start;        /* ensure each cell hugs the top/baseline */
+  }
+
+  .tag-right {
+    display: flex;            /* stack the spans */
+    flex-direction: column;
+    align-items: flex-end;    /* right edge */
+    line-height: 1.1;
+    gap: 2px;
+  }
+
+  .tag-right .dt-day,
+  .tag-right .dt-date,
+  .tag-right .dt-time {
+    display: block;           /* vertical stack */
+  }
+}
+
