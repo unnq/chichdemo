@@ -297,8 +297,15 @@ footer{
 /* --- Datetime --- */
 
 /* Ensure each cell hugs the top */
-.tag-left, .tag-center, .tag-right { align-self: start; }
-.tag-center { justify-self: center; }
+.tag-left, .tag-center, .tag-right { 
+   align-self: start; 
+}
+.tag-center { 
+   justify-self: center; 
+   padding: 16px;
+   border-radius: 16px;
+   background-color: #f2f1f096;
+}
 
 /* Stack the Day / Date / Time on all viewports */
 .tag-right{
@@ -307,6 +314,9 @@ footer{
   align-items: flex-end;        /* keep right-aligned */
   line-height: 1.1;
   gap: 2px;
+  padding: 16px;
+  border-radius: 16px;
+  background-color: #f2f1f096;
 }
 
 .tag-right .dt-day,
@@ -321,6 +331,9 @@ footer{
   line-height: 1.1;
   gap: 2px;
   opacity: 0.8;              /* same subtle style you already had */
+  padding: 16px;
+  border-radius: 16px;
+  background-color: #f2f1f096;
 }
 
 .tag-left .tl-line {
