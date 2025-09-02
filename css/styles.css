@@ -511,6 +511,13 @@ footer{
   user-select: none;
 }
 
+.services .service-item { 
+   color: inherit; 
+}
+.services .s-name, .services .s-arrow { 
+   color: inherit; 
+}
+
 /* responsive tweaks */
 @media (max-width: 1000px){
   .services-grid{
