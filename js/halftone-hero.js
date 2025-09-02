@@ -6,7 +6,7 @@
   const DOT_RGBA   = 'rgba(44,45,46,0.65)'; // dark semi-opaque dots to play nice on your f2f1f0 background
   const MAX_DPR    = 2;                     // cap for perf + crispness
   const DEFAULTS   = {
-    pitch: 6,         // px between dot centers (visual density)
+    pitch: 8,         // px between dot centers (visual density)
     minR:  0.28,      // min dot radius near center
     maxR:  1.5,      // max dot radius near edges
     edgePower: 3.35,  // edge falloff curve; higher = heavier edges
