@@ -14,22 +14,6 @@
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 
-<!-- SVG filter for ripple displacement (animated, gentle) -->
-<svg width="0" height="0" style="position:fixed; left:-100%; top:-100%; pointer-events:none;" aria-hidden="true">
-  <filter id="rippleDisp" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">
-    <!-- Soft fractal noise that slowly shifts -->
-    <feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="2" seed="3" result="noise">
-      <animate attributeName="baseFrequency" dur="9s" values="0.012;0.017;0.012" repeatCount="indefinite"/>
-      <animate attributeName="seed"          dur="11s" values="2;5;2"            repeatCount="indefinite"/>
-    </feTurbulence>
-
-    <!-- Gentle displacement of the halftone dots -->
-    <feDisplacementMap in="SourceGraphic" in2="noise" scale="6" xChannelSelector="R" yChannelSelector="G">
-      <animate attributeName="scale" dur="9s" values="3;6;3" repeatCount="indefinite"/>
-    </feDisplacementMap>
-  </filter>
-</svg>
-  
   
 <body>
   <!-- Navbar -->
