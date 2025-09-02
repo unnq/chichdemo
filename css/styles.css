@@ -334,4 +334,40 @@ footer{
   .tag-right { font-size: 0.9em; }
 }
 
+/* Keyframes */
+@keyframes slideInLeft {
+  from { transform: translateX(-30px); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+@keyframes slideInRight {
+  from { transform: translateX(30px); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+@keyframes slideInDown {
+  from { transform: translateY(-20px); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+
+/* Apply animations */
+.hero-tagline .tag-left {
+  animation: slideInLeft 0.7s ease-out forwards;
+}
+.hero-tagline .tag-center {
+  animation: slideInDown 0.7s ease-out forwards;
+  animation-delay: 0.15s; /* start after left */
+}
+.hero-tagline .tag-right {
+  animation: slideInRight 0.7s ease-out forwards;
+  animation-delay: 0.3s; /* start last */
+}
+
+/* Cascade the lines inside tag-left */
+.tag-left .tl-line {
+  opacity: 0;
+  transform: translateX(-20px);
+  animation: slideInLeft 0.6s ease-out forwards;
+}
+.tag-left .tl-line:nth-child(1) { animation-delay: 0.1s; }
+.tag-left .tl-line:nth-child(2) { animation-delay: 0.25s; }
+.tag-left .tl-line:nth-child(3) { animation-delay: 0.4s; }
 
