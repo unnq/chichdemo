@@ -922,20 +922,7 @@ footer{
   color: currentColor; /* default inherits text color, will be overridden by JS */
 }
 
-/* Corner asterisks */
-.mm-asterisk {
-  position: absolute;
-  font-family: 'Sono', monospace;
-  font-weight: 600;
-  line-height: 1;
-  opacity: 0.65;
-  user-select: none;
-  padding: 16px;
-}
-.mm-ast-tl { top: 0; left: 0; }
-.mm-ast-tr { top: 0; right: 0; }
-.mm-ast-bl { bottom: 0; left: 0; }
-.mm-ast-br { bottom: 0; right: 0; }
+
 
 /* Bottom-right datetime (Sono, stacked) */
 .mobile-datetime {
