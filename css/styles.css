@@ -538,3 +538,72 @@ footer{
   }
 }
 
+/* =========================
+   Services animations
+   ========================= */
+
+/* Start hidden (keeps layout; only opacity/transform animate in) */
+.services-label {
+  opacity: 0;
+  transform: translateX(-10px);
+}
+
+.services-grid .service-item {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+/* When section is visible, play animations */
+.services.is-visible .services-label {
+  animation: servicesLabelIn 520ms cubic-bezier(.22,1,.36,1) 40ms forwards;
+}
+
+.services.is-visible .service-item {
+  animation: serviceItemIn 480ms ease-out forwards;
+}
+
+/* Light arrow glide after item settles (only once) */
+.services.is-visible .service-item .s-arrow {
+  animation: arrowGlide 600ms cubic-bezier(.22,1,.36,1) 300ms both;
+}
+
+/* Additional progressive class (from JS) so the arrow only plays per-item as it reveals */
+.services .service-item.revealed .s-arrow {
+  animation: arrowGlide 520ms cubic-bezier(.22,1,.36,1) 180ms both;
+}
+
+/* Stagger via nth-child (works even without the JS per-item reveal) */
+.services.is-visible .service-item:nth-child(1)  { animation-delay: 80ms;  }
+.services.is-visible .service-item:nth-child(2)  { animation-delay: 140ms; }
+.services.is-visible .service-item:nth-child(3)  { animation-delay: 200ms; }
+.services.is-visible .service-item:nth-child(4)  { animation-delay: 260ms; }
+.services.is-visible .service-item:nth-child(5)  { animation-delay: 320ms; }
+.services.is-visible .service-item:nth-child(6)  { animation-delay: 380ms; }
+.services.is-visible .service-item:nth-child(7)  { animation-delay: 440ms; }
+
+/* Keyframes */
+@keyframes servicesLabelIn {
+  from { opacity: 0; transform: translateX(-10px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes serviceItemIn {
+  from { opacity: 0; transform: translateY(12px); }
+  60%  { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes arrowGlide {
+  0%   { transform: translateX(0);   opacity: .85; }
+  40%  { transform: translateX(4px); opacity: .9;  }
+  100% { transform: translateX(0);   opacity: .85; }
+}
+
+/* Reduced motion: reveal instantly, no movement */
+@media (prefers-reduced-motion: reduce) {
+  .services-label,
+  .services-grid .service-item,
+  .services .service-item .s-arrow {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
