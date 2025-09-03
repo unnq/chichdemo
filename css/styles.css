@@ -96,6 +96,17 @@ nav {
   color: var(--text-dark);
 }
 
+/* Mobile nav toggle */
+.nav-menu-toggle{
+  display:none;
+  appearance:none;
+  border: 1px solid var(--hairline);
+  background: transparent;
+  color: var(--text-dark);
+  padding: 8px 10px;
+  border-radius: 8px;
+}
+
 
 
 /* Contact button shares CTA styling */
@@ -129,16 +140,7 @@ nav {
   color: var(--brand-blue); /* white text on blue button background */
 }
 
-/* Mobile nav toggle */
-.nav-menu-toggle{
-  display:none;
-  appearance:none;
-  border: 1px solid var(--hairline);
-  background: transparent;
-  color: var(--text-dark);
-  padding: 8px 10px;
-  border-radius: 8px;
-}
+
 
 /* =========================
    Hero (grid with tagline)
