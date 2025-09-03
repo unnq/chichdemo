@@ -398,6 +398,27 @@ footer{
   display: block;
 }
 
+/* Socials in tagline center */
+.socials-icons {
+  display: flex;
+  gap: 16px;
+}
+
+.socials-icons .social-link {
+  color: var(--text-dark);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 160ms ease;
+}
+
+.socials-icons .social-link:hover,
+.socials-icons .social-link:focus-visible {
+  opacity: 0.65;
+  outline: none;
+}
+
+
 
 /* (Optional) Slightly reduce font size on small screens for the stack */
 @media (max-width: 640px) {
