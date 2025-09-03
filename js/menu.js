@@ -1,48 +1,108 @@
 // js/menu.js
-(function () {
-  const toggle = document.querySelector('.nav-menu-toggle');
-  const panel = document.getElementById('mobile-menu');
-  if (!toggle || !panel) return;
+// Slide-down mobile menu with blur background.
+// Keeps the toggle accessible, supports ESC + outside click,
+// closes on resize to desktop, and syncs datetime from the tagline.
+// No changes needed to your datetime.js.
 
-  const firstLink = () => panel.querySelector('a');
+document.addEventListener('DOMContentLoaded', () => {
+  const toggle = document.querySelector('.nav-menu-toggle');
+  const menu   = document.getElementById('mobile-menu');
+  if (!toggle || !menu) return;
+
+  // a11y setup
+  toggle.setAttribute('aria-expanded', 'false');
+  menu.setAttribute('aria-hidden', 'true');
+
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function openMenu() {
-    panel.hidden = false;
-    panel.classList.add('open');
+    menu.classList.add('is-open');
+    menu.removeAttribute('hidden'); // if present
     toggle.setAttribute('aria-expanded', 'true');
-    document.body.classList.add('menu-open');
-    // focus first link for accessibility
-    setTimeout(() => firstLink()?.focus(), 0);
+    menu.setAttribute('aria-hidden', 'false');
+
+    // lock body scroll optionally (comment out if you don't want this)
+    document.documentElement.style.overflow = 'hidden';
+
+    // sync datetime on open
+    syncMobileDatetime();
+
+    // listeners
+    document.addEventListener('keydown', onKeydown);
+    document.addEventListener('pointerdown', onOutsidePointerDown);
   }
 
   function closeMenu() {
-    panel.classList.remove('open');
+    menu.classList.remove('is-open');
     toggle.setAttribute('aria-expanded', 'false');
-    document.body.classList.remove('menu-open');
-    // Wait for transition to finish before hiding for a11y
-    setTimeout(() => { panel.hidden = true; }, 200);
-    toggle.focus();
+    menu.setAttribute('aria-hidden', 'true');
+
+    // allow page scroll again
+    document.documentElement.style.overflow = '';
+
+    document.removeEventListener('keydown', onKeydown);
+    document.removeEventListener('pointerdown', onOutsidePointerDown);
   }
 
   function isOpen() {
-    return panel.classList.contains('open');
+    return menu.classList.contains('is-open');
+  }
+
+  function onKeydown(e) {
+    if (e.key === 'Escape' && isOpen()) {
+      closeMenu();
+      toggle.focus();
+    }
+  }
+
+  function onOutsidePointerDown(e) {
+    const withinToggle = toggle.contains(e.target);
+    const withinMenu   = menu.contains(e.target);
+    if (!withinToggle && !withinMenu && isOpen()) {
+      closeMenu();
+    }
   }
 
   toggle.addEventListener('click', () => {
     isOpen() ? closeMenu() : openMenu();
   });
 
-  // Close on ESC
-  window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && isOpen()) {
-      e.preventDefault();
-      closeMenu();
-    }
-  });
+  // Close when switching to desktop layout
+  const onResize = () => {
+    if (window.innerWidth > 900 && isOpen()) closeMenu();
+  };
+  window.addEventListener('resize', onResize);
 
-  // Close after clicking a link
-  panel.addEventListener('click', (e) => {
-    const a = e.target.closest('a');
-    if (a) closeMenu();
-  });
-})();
+  // --- Datetime sync ---
+  // Copy text from the existing tagline datetime (#tagline-datetime) if present.
+  // Falls back gracefully if not found.
+  function syncMobileDatetime() {
+    const src = document.getElementById('tagline-datetime');
+    const dst = document.getElementById('mobile-datetime');
+    if (!src || !dst) return;
+
+    const sDay  = src.querySelector('.dt-day')?.textContent || '';
+    const sDate = src.querySelector('.dt-date')?.textContent || '';
+    const sTime = src.querySelector('.dt-time')?.textContent || '';
+
+    const dDay  = dst.querySelector('.dt-day');
+    const dDate = dst.querySelector('.dt-date');
+    const dTime = dst.querySelector('.dt-time');
+
+    if (dDay)  dDay.textContent  = sDay;
+    if (dDate) dDate.textContent = sDate;
+    if (dTime) dTime.textContent = sTime;
+  }
+
+  // Keep the mobile datetime reasonably fresh without touching your datetime.js
+  // (updates every 30s while the page is open)
+  setInterval(syncMobileDatetime, 30000);
+
+  // If menu starts hidden via [hidden], ensure correct state
+  menu.removeAttribute('hidden');
+  if (!reduce) {
+    // keep it visually hidden until opened
+    menu.classList.remove('is-open');
+    menu.setAttribute('aria-hidden', 'true');
+  }
+});
