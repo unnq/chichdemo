@@ -757,3 +757,105 @@ footer{
   background: #ffffffb8;
   backdrop-filter: blur(2px);
 }
+
+
+/* =========================
+   Client Work – Hover Overlay
+   ========================= */
+
+/* card host needs a stacking context so overlay sits above the image */
+.cw-card {
+  position: relative;
+  overflow: hidden;
+}
+
+/* overlay shell */
+.cw-overlay {
+  position: absolute;
+  inset: 0;
+  display: block;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity 220ms ease, transform 220ms ease;
+  /* translucent wash that matches --bg-light (#f2f1f0) */
+  background: rgba(242, 241, 240, 0.72);
+  /* blur what’s underneath */
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+
+/* reveal on hover/focus */
+.cw-card:hover .cw-overlay,
+.cw-card:focus-within .cw-overlay {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* overlay content layout */
+.cw-overlay-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: clamp(10px, 2.2vw, 16px);
+}
+
+/* corner asterisks */
+.cw-asterisk {
+  position: absolute;
+  font-family: 'Sono', monospace;
+  font-weight: 600;
+  opacity: 0.65;
+  user-select: none;
+  line-height: 1;
+}
+.cw-ast-tl { top: 8px;  left: 10px; }
+.cw-ast-tr { top: 8px;  right: 10px; }
+.cw-ast-bl { bottom: 8px; left: 10px; }
+.cw-ast-br { bottom: 8px; right: 10px; }
+
+/* meta block (top-left) */
+.cw-meta {
+  position: absolute;
+  top: clamp(14px, 2.8vw, 18px);
+  left: clamp(14px, 2.8vw, 18px);
+  right: clamp(14px, 3vw, 24px); /* allow long titles to wrap neatly */
+  max-width: 70%;
+}
+.cw-title {
+  font-family: "Inter", Arial, sans-serif;
+  font-weight: 700;
+  font-size: clamp(0.95rem, 1.6vw, 1.15rem);
+  letter-spacing: -0.01em;
+  margin: 0 0 6px 0;
+  color: var(--text-dark);
+}
+.cw-services {
+  margin: 0;
+  padding-left: 1.1em; /* simple bullet list */
+  font-family: 'Sono', monospace;
+  font-size: clamp(0.8rem, 1.3vw, 0.92rem);
+  line-height: 1.25;
+  opacity: 0.85;
+}
+.cw-services li { margin: 2px 0; }
+
+/* centered CTA */
+.cw-center-cta {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: 600;
+  text-decoration: underline;
+  color: var(--g5);
+  font-family: "Inter", Arial, sans-serif;
+  font-size: clamp(0.95rem, 1.8vw, 1.1rem);
+  cursor: default; /* change to pointer if you make it a link */
+}
+
+/* touch-friendly: keep overlay visible on focus for keyboard users */
+.cw-card a:focus-visible,
+.cw-card button:focus-visible {
+  outline: 2px solid var(--g5);
+  outline-offset: 2px;
+}
