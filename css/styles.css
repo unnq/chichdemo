@@ -539,7 +539,6 @@ footer{
 .services-layout{
   display: grid;
   grid-template-columns: 1fr 3fr;   /* 25% / 75% split */
-  gap: clamp(16px, 3vw, 32px);
 }
 
 /* Left label column */
@@ -559,7 +558,7 @@ footer{
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(10px, 2vw, 16px);
-  padding: clamp(10px, 2.2vw, 20px);
+  padding: clamp(36px, 3.2vw, 48px);
 }
 
 .service-item{
