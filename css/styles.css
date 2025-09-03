@@ -390,7 +390,7 @@ footer { border-top: 1px solid var(--hairline); }
   padding: 10px;
   text-decoration: none;
   border: 1px dashed;
-  border-radius: 10px;                 /* subtle polish */
+  border-radius: 1px;                 /* subtle polish */
   color: inherit;                      /* allow future color script */
   transition: transform 140ms ease;
 }
