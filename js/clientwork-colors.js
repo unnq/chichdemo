@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 1) Client Work asterisks + scroll indicator
   const asters = document.querySelectorAll(
-    '.cw-asterisk, .asterisk-left, .asterisk-right, .scroll-text'
+    '.cw-asterisk, .asterisk-left, .asterisk-right, .scroll-text, .nav-left'
   );
   asters.forEach((el, i) => {
     el.style.color = palette[i % palette.length];
