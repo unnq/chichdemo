@@ -32,6 +32,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // 2) Mobile menu links (assign color via CSS variable)
   const menuLinks = document.querySelectorAll('.mobile-menu a');
   menuLinks.forEach((el, i) => {
-    el.style.setProperty('--dot-color', palette[i % palette.length]);
+    el.style.setProperty('color', palette[i % palette.length]);
   });
 });
