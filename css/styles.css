@@ -473,7 +473,7 @@ footer{
 /* Left label column */
 .services-label{
   font-family: var(--font-sans);
-  font-size: 2.2rem;
+  font-size: 1.2rem;
   font-weight: 500;
   letter-spacing: 0.05em;
   display: flex;
