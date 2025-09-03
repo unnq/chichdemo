@@ -844,8 +844,8 @@ footer{
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-weight: 600;
-  text-decoration: underline;
+  font-weight: 500;
+  border-bottom: 1px dashed var(--g5);
   color: var(--g5);
   font-family: "Inter", Arial, sans-serif;
   font-size: clamp(0.95rem, 1.8vw, 1.1rem);
