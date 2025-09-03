@@ -11,7 +11,7 @@
   --g5: #ec4899; 
   --brand-blue: #3b82f6;         
    
-  --hairline: rgba(10,10,10,0.25);  /* for borders on light UI */
+  --hairline: rgba(10,10,10,0.35);  /* for borders on light UI */
 
  --font-sans: "Inter", Arial, sans-serif;
 
@@ -51,7 +51,6 @@ html, body{
   margin-inline: clamp(8px, 3vw, 24px);
   border-left: 1px solid var(--hairline);
   border-right: 1px solid var(--hairline);
-  padding: clamp(10px, 3vw, 16px);
 }
 
 /* =========================
@@ -282,7 +281,6 @@ footer{
      margin-inline: 0;
      border-left: 1px solid var(--hairline);
      border-right: 1px solid var(--hairline);
-     padding: clamp(10px, 3vw, 16px);
    }
    
   .hero{
