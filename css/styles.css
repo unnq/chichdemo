@@ -907,9 +907,19 @@ footer{
   font-weight: 500;
   color: var(--text-dark);
   border-bottom: 1px dashed var(--hairline);
+  position: relative;
 }
+
 .mobile-menu a:last-of-type {
   border-bottom: 1px dashed var(--hairline); /* keep a rhythm to the datetime */
+}
+
+.mobile-menu a::after {
+  content: "°"; /* the dot/degree symbol */
+  margin-left: 8px;
+  font-size: 1rem;
+  vertical-align: middle;
+  color: currentColor; /* default inherits text color, will be overridden by JS */
 }
 
 /* Corner asterisks */
