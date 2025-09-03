@@ -107,6 +107,55 @@ nav {
   border-radius: 8px;
 }
 
+/* =========================
+   Navbar load-in animations (CSS-only)
+   ========================= */
+
+/* Keyframes */
+@keyframes navLogoIn {
+  from { opacity: 0; transform: translateY(16px) translateX(-10px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) translateX(0) scale(1); }
+}
+@keyframes navItemIn {
+  from { opacity: 0; transform: translateY(12px) translateX(-8px); }
+  to   { opacity: 1; transform: translateY(0) translateX(0); }
+}
+
+/* Initial state + animations */
+nav .nav-left {
+  opacity: 0;                /* ensure hidden before anim starts */
+  animation: navLogoIn 600ms ease-out 120ms both;
+  will-change: transform, opacity;
+}
+
+nav .nav-right > * {
+  opacity: 0;
+  animation: navItemIn 520ms cubic-bezier(.2,.65,.2,1) both;
+  animation-delay: calc(200ms + var(--i, 0) * 90ms); /* stagger L→R */
+  will-change: transform, opacity;
+}
+
+/* Stagger order (left-to-right) */
+nav .nav-right > :nth-child(1) { --i: 0; } /* Services */
+nav .nav-right > :nth-child(2) { --i: 1; } /* Client Work */
+nav .nav-right > :nth-child(3) { --i: 2; } /* Contact (btn-cta) */
+nav .nav-right > :nth-child(4) { --i: 3; } /* Mobile toggle */
+
+/* Optional: make the CTA feel a touch snappier without changing layout */
+nav .nav-right .btn-cta {
+  animation-duration: 560ms;
+  transform-origin: center;
+}
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  nav .nav-left,
+  nav .nav-right > * {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
 
 
 /* Contact button shares CTA styling */
