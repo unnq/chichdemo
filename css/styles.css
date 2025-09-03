@@ -413,10 +413,10 @@ footer{
 @keyframes slideInRight { from { transform: translateX(30px);  opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 @keyframes slideInDown  { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-/* Apply animations (start at 0s) */
-.hero-tagline .tag-left   { animation: slideInLeft 0.7s ease-out forwards; }
-.hero-tagline .tag-center { animation: slideInDown 0.7s ease-out forwards;  animation-delay: 0.15s; }
-.hero-tagline .tag-right  { animation: slideInRight 0.7s ease-out forwards; animation-delay: 0.30s; }
+/* Apply animations */
+.hero-tagline .tag-left   { animation: slideInLeft 1.4s ease-out forwards; }
+.hero-tagline .tag-center { animation: slideInDown 1.4s ease-out forwards;  animation-delay: 0.3s; }
+.hero-tagline .tag-right  { animation: slideInRight 1.4s ease-out forwards; animation-delay: 0.6s; }
 
 /* Cascade the lines inside tag-left */
 .tag-left .tl-line {
@@ -428,7 +428,7 @@ footer{
 .tag-left .tl-line:nth-child(2) { animation-delay: 0.25s; }
 .tag-left .tl-line:nth-child(3) { animation-delay: 0.40s; }
 
-/* (Very slight delay before next block: tags end ~1.0s) */
+/* (Very slight delay before next block */
 
 /* 2) Scroll indicator entrance */
 @keyframes slideUpFade   { from { transform: translateY(18px);  opacity: 0; }  to { transform: translateY(0); opacity: 1; } }
@@ -443,9 +443,9 @@ footer{
 .asterisk-right { display: inline-block; }
 
 /* Start scroll indicator around 1.1s total timeline */
-.asterisk-left  { animation: sideSpinLeft  0.5s cubic-bezier(.22,1,.36,1) .80s both; }
-.scroll-text    { animation: slideUpFade   0.5s ease-out                    .85s both; }
-.asterisk-right { animation: sideSpinRight 0.5s cubic-bezier(.22,1,.36,1)  .9s both; }
+.asterisk-left  { animation: sideSpinLeft  0.5s cubic-bezier(.22,1,.36,1) 1.5s both; }
+.scroll-text    { animation: slideUpFade   0.5s ease-out                    1.6s both; }
+.asterisk-right { animation: sideSpinRight 0.5s cubic-bezier(.22,1,.36,1)  1.7s both; }
 
 /* (Very slight delay before next block) */
 
@@ -477,7 +477,7 @@ footer{
   pointer-events: none;
   transform: translateX(-120%) skewX(-12deg);
   /* start after scroll indicator begins/mostly finishes */
-  animation: btnShimmer 0.9s ease-out 1.55s 1 both;
+  animation: btnShimmer 0.9s ease-out 2s 1 both;
 }
 
 /* Reduced motion: show everything instantly, no shimmer sweep */
