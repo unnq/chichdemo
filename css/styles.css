@@ -920,6 +920,18 @@ footer { border-top: 1px solid var(--hairline); }
   backdrop-filter: blur(2px);
 }
 
+@media (max-width: 640px){
+  .cw-grid {
+    grid-template-columns: 1fr;          /* single column */
+    grid-template-rows: repeat(4, auto); /* 4 rows */
+  }
+
+  /* ensure the reserved slot falls to the bottom */
+  .cw-slot--open {
+    order: 99;
+  }
+}
+
 
 /* =========================
    Client Work – Hover Overlay
