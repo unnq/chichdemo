@@ -702,6 +702,7 @@ footer{
   align-items: center;
   gap: 12px;
   padding-inline: clamp(8px, 3vw, 24px);
+  padding: clamp(10px, 2.2vw, 36px);
 }
 
 .client-work-title {
