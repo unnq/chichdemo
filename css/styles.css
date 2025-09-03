@@ -70,7 +70,7 @@ nav {
   justify-content: space-between;
   align-items: center;
   gap: 20px;
-  padding-block: 18px;  /* adjust until it feels right */
+  padding-block: 12px;  /* adjust until it feels right */
   padding-inline: clamp(16px, 3vw, 28px);
 }
 
