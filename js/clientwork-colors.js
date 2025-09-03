@@ -1,9 +1,9 @@
 // js/clientwork-colors.js
 // Randomizes your palette order on each page load
-// Applies colors in sequence to:
-// - Client Work overlay asterisks (.cw-asterisk)
-// - Mobile menu asterisks (.mm-asterisk)
-// - Scroll indicator contents (.asterisk-left, .asterisk-right, .scroll-text)
+// Applies colors to:
+// - Client Work overlay asterisks
+// - Scroll indicator asterisks + text
+// - Mobile menu dots (::after of each link)
 
 document.addEventListener('DOMContentLoaded', () => {
   let palette = [
@@ -21,12 +21,17 @@ document.addEventListener('DOMContentLoaded', () => {
     [palette[i], palette[j]] = [palette[j], palette[i]];
   }
 
-  // Collect all targets
+  // 1) Client Work asterisks + scroll indicator
   const asters = document.querySelectorAll(
-    '.cw-asterisk, .mm-asterisk, .asterisk-left, .asterisk-right, .scroll-text'
+    '.cw-asterisk, .asterisk-left, .asterisk-right, .scroll-text'
   );
-
   asters.forEach((el, i) => {
     el.style.color = palette[i % palette.length];
+  });
+
+  // 2) Mobile menu links (assign color via CSS variable)
+  const menuLinks = document.querySelectorAll('.mobile-menu a');
+  menuLinks.forEach((el, i) => {
+    el.style.setProperty('--dot-color', palette[i % palette.length]);
   });
 });
