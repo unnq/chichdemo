@@ -892,7 +892,7 @@ footer{
    ========================= */
 .mobile-menu {
   position: fixed;
-  top: var(--nav-h);   /* sits right under the sticky nav */
+  top: 76px;   /* sits right under the sticky nav */
   left: 0;
   right: 0;
   z-index: 40;         /* below nav (z:50), above content */
