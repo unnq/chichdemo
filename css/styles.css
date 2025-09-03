@@ -497,6 +497,7 @@ footer{
   align-items: baseline;
   gap: 12px;
   padding: clamp(10px, 2vw, 10px) clamp(10px, 2vw, 10px);
+  border: 1px dashed;
 }
 
 .s-name{
