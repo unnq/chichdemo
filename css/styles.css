@@ -803,22 +803,21 @@ footer{
 .cw-asterisk {
   position: absolute;
   font-family: 'Sono', monospace;
-  font-weight: 600;
-  opacity: 0.65;
+  font-size: 1.1rem;
+  font-weight: 500;
+  opacity: 0.85;
   user-select: none;
   line-height: 1;
 }
-.cw-ast-tl { top: 8px;  left: 10px; }
-.cw-ast-tr { top: 8px;  right: 10px; }
-.cw-ast-bl { bottom: 8px; left: 10px; }
-.cw-ast-br { bottom: 8px; right: 10px; }
+.cw-ast-tl { top: 16px;  left: 16px; }
+.cw-ast-tr { top: 16px;  right: 16px; }
+.cw-ast-bl { bottom: 16px; left: 16px; }
+.cw-ast-br { bottom: 16px; right: 16px; }
 
 /* meta block (top-left) */
 .cw-meta {
   position: absolute;
-  top: clamp(14px, 2.8vw, 18px);
-  left: clamp(14px, 2.8vw, 18px);
-  right: clamp(14px, 3vw, 24px); /* allow long titles to wrap neatly */
+  padding: clamp(16px, 3vw, 24px);
   max-width: 70%;
 }
 .cw-title {
