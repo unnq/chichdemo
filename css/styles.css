@@ -838,6 +838,12 @@ footer{
 }
 .cw-services li { margin: 2px 0; }
 
+@media (max-width: 640px) {
+  .cw-services {
+    display: none;
+  }
+}
+
 /* centered CTA */
 .cw-center-cta {
   position: absolute;
