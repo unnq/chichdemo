@@ -660,3 +660,121 @@ footer{
     transform: none !important;
   }
 }
+
+
+/* =========================
+   Client Work
+   ========================= */
+.client-work {
+  border-top: 1px solid var(--hairline);
+}
+
+.client-work-inner {
+  display: grid;
+  gap: clamp(16px, 3vw, 28px);
+  padding-block: clamp(18px, 3.5vw, 28px);
+}
+
+/* Header row */
+.client-work-head {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding-inline: clamp(8px, 3vw, 24px);
+}
+
+.client-work-title {
+  font-size: clamp(1rem, 1.4vw, 1.15rem);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+
+/* Pink CTA variant (reuses hover invert pattern) */
+.btn-cta-pink{
+  display:inline-block;
+  font-weight:500;
+  font-size: 0.95rem;
+  line-height: 1;
+  padding: 10px 14px;
+  border-radius: 24px;
+  border: 1px solid var(--g5);
+  background: var(--g5);
+  color: #fff;
+  text-decoration: none;
+  transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
+}
+.btn-cta-pink:hover,
+.btn-cta-pink:focus-visible{
+  background: transparent;
+  color: var(--g5);
+  border-color: var(--g5);
+  outline: none;
+}
+
+/* Grid (always 2x2, desktop + mobile) */
+.cw-grid{
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(10px, 2.5vw, 18px);
+  padding-inline: clamp(8px, 3vw, 24px);
+}
+
+/* Tiles */
+.cw-card{
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--hairline);
+  background: #fff;
+  /* fixed, generous display size without CLS */
+  aspect-ratio: 4 / 3;     /* adjust to taste (3/2, 16/10, etc.) */
+}
+
+/* Image fill */
+.cw-card img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Reserved / creative slot (top-right for now) */
+.cw-slot--open{
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(236, 72, 153, 0.10), transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(59, 130, 246, 0.10), transparent 50%),
+    linear-gradient(#fdfdfd, #f9f9f9);
+  border: 1px dashed var(--hairline);
+}
+
+.cw-slot--open .cw-slot-label{
+  font-size: 0.9rem;
+  font-weight: 600;
+  opacity: 0.6;
+  user-select: none;
+  text-align: center;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: #ffffffb8;
+  backdrop-filter: blur(2px);
+}
+
+/* Subtle hover affordance for tiles (labels come later) */
+.cw-card::after{
+  content: "";
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,0.05);
+  opacity: 0;
+  transition: opacity 160ms ease;
+  pointer-events: none;
+}
+.cw-card:hover::after{ opacity: .05; }
+
+/* Reduced motion: keep interactions instant */
+@media (prefers-reduced-motion: reduce){
+  .btn-cta-pink{ transition: none; }
+  .cw-card::after{ transition: none; }
+}
