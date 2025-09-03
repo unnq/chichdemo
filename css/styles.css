@@ -322,6 +322,130 @@ footer{
 }
 
 /* =========================
+   Footer (expanded)
+   ========================= */
+footer { border-top: 1px solid var(--hairline); }
+
+/* Top block: 1/3 — 2/3 split */
+.footer-top {
+  display: grid;
+  grid-template-columns: 1fr 2fr;             /* 1/3 : 2/3 */
+  gap: clamp(12px, 3vw, 28px);
+  padding-block: clamp(18px, 3.5vw, 28px);
+  border-bottom: 1px dashed var(--hairline);  /* dashed divider to bottom row */
+}
+
+/* Left box */
+.ft-left {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  padding: clamp(12px, 2.2vw, 20px);
+  border-right: 1px dashed var(--hairline);
+}
+
+.ft-logo {
+  font-family: "Inter", Arial, sans-serif;
+  font-weight: 800;
+  font-size: clamp(28px, 6vw, 48px);
+  line-height: 1;
+  letter-spacing: 0.2px;
+  color: var(--text-dark);
+}
+
+.ft-pitch {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  line-height: 1.35;
+  opacity: 0.9;
+}
+
+/* Right box: three vertical lists */
+.ft-right {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(10px, 2vw, 20px);
+  padding: clamp(12px, 2.2vw, 20px);
+}
+
+.ft-col { display: grid; align-content: start; gap: 10px; }
+
+/* Headings echo the Services label tone */
+.ft-head {
+  margin: 0 0 6px 0;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: clamp(0.95rem, 1.3vw, 1.05rem);
+  letter-spacing: 0.06em;
+  opacity: 0.9;
+}
+
+/* Items styled like Services */
+.ft-item {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 10px;
+  text-decoration: none;
+  border: 1px dashed;
+  border-radius: 10px;                 /* subtle polish */
+  color: inherit;                      /* allow future color script */
+  transition: transform 140ms ease;
+}
+
+.ft-item:hover,
+.ft-item:focus-visible {
+  transform: translateY(-1px);
+  outline: none;
+}
+
+.ft-name {
+  font-size: 1rem;
+  font-weight: 500;
+  color: currentColor;
+}
+
+.ft-arrow {
+  margin-left: auto;
+  opacity: 0.85;
+  user-select: none;
+}
+
+/* Bottom row you already had */
+.footer-inner {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap: 12px;
+  padding: 14px var(--container-pad);
+  font-family:'Sono', monospace;
+  font-size:0.9rem;
+}
+
+/* Responsive */
+@media (max-width: 1000px){
+  .footer-top {
+    grid-template-columns: 1fr;       /* stack left above right */
+  }
+  .ft-left {
+    border-right: none;
+    border-bottom: 1px dashed var(--hairline);
+    padding-bottom: clamp(16px, 3vw, 22px);
+    margin-bottom: clamp(10px, 2vw, 14px);
+  }
+  .ft-right {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 640px){
+  .ft-right {
+    grid-template-columns: 1fr;       /* one column lists */
+  }
+}
+
+
+/* =========================
    Mobile
    ========================= */
 @media (max-width: 900px){
