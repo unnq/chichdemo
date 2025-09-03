@@ -531,7 +531,7 @@ footer{
     border-right: none;
     border-bottom: 1px dashed var(--hairline);
     margin-bottom: 1rem;
-    padding-bottom: 0.5rem;
+    padding: clamp(20px, 2.2vw, 30px);
   }
   .services-grid{
     grid-template-columns: 1fr;
