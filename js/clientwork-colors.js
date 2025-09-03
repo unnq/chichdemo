@@ -1,6 +1,9 @@
 // js/clientwork-colors.js
 // Randomizes your palette order on each page load
-// Applies colors in sequence to .cw-asterisk and .mm-asterisk
+// Applies colors in sequence to:
+// - Client Work overlay asterisks (.cw-asterisk)
+// - Mobile menu asterisks (.mm-asterisk)
+// - Scroll indicator contents (.asterisk-left, .asterisk-right, .scroll-text)
 
 document.addEventListener('DOMContentLoaded', () => {
   let palette = [
@@ -18,8 +21,11 @@ document.addEventListener('DOMContentLoaded', () => {
     [palette[i], palette[j]] = [palette[j], palette[i]];
   }
 
-  // Collect both clientwork and mobile-menu asterisks
-  const asters = document.querySelectorAll('.cw-asterisk, .mm-asterisk');
+  // Collect all targets
+  const asters = document.querySelectorAll(
+    '.cw-asterisk, .mm-asterisk, .asterisk-left, .asterisk-right, .scroll-text'
+  );
+
   asters.forEach((el, i) => {
     el.style.color = palette[i % palette.length];
   });
