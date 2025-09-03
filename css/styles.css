@@ -454,7 +454,7 @@ footer { border-top: 1px solid var(--hairline); }
   }
   .ft-item{
     padding: 6px 8px;
-    border-radius: 8px;
+    border-radius: 1px;
   }
   .ft-name{ font-size: 0.92rem; }
   .ft-arrow{ font-size: 0.9rem; }
