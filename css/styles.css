@@ -439,11 +439,27 @@ footer { border-top: 1px solid var(--hairline); }
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+
+/* Keep the footer lists 3-up even on small screens */
 @media (max-width: 640px){
-  .ft-right {
-    grid-template-columns: 1fr;       /* one column lists */
+  .ft-right{
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 8px;
+    padding: 8px;
   }
+  .ft-col{ gap: 6px; }
+  .ft-head{
+    font-size: 0.85rem;
+    margin-bottom: 4px;
+  }
+  .ft-item{
+    padding: 6px 8px;
+    border-radius: 8px;
+  }
+  .ft-name{ font-size: 0.92rem; }
+  .ft-arrow{ font-size: 0.9rem; }
 }
+
 
 
 /* =========================
