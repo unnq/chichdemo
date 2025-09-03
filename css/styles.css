@@ -915,7 +915,7 @@ footer{
 }
 
 .mobile-menu a::after {
-  content: "°"; /* the dot/degree symbol */
+  content: "↲"; /* the dot/degree symbol */
   margin-left: 8px;
   font-size: 1rem;
   vertical-align: middle;
