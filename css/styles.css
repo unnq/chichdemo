@@ -690,8 +690,8 @@ footer{
   letter-spacing: 0.06em;
 }
 
-/* Pink CTA variant (reuses hover invert pattern) */
-.btn-cta-pink{
+/* Pink CTA variant */
+.btn-cta-pink {
   display:inline-block;
   font-weight:500;
   font-size: 0.95rem;
@@ -705,7 +705,7 @@ footer{
   transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
 }
 .btn-cta-pink:hover,
-.btn-cta-pink:focus-visible{
+.btn-cta-pink:focus-visible {
   background: transparent;
   color: var(--g5);
   border-color: var(--g5);
@@ -713,34 +713,30 @@ footer{
 }
 
 /* Grid (always 2x2, desktop + mobile) */
-.cw-grid{
+.cw-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(10px, 2.5vw, 18px);
+  gap: clamp(10px, 2vw, 10px);
   padding-inline: clamp(8px, 3vw, 24px);
 }
 
 /* Tiles */
-.cw-card{
+.cw-card {
   position: relative;
-  border-radius: 14px;
   overflow: hidden;
-  border: 1px solid var(--hairline);
-  background: #fff;
-  /* fixed, generous display size without CLS */
-  aspect-ratio: 4 / 3;     /* adjust to taste (3/2, 16/10, etc.) */
+  aspect-ratio: 4 / 3;   /* controls height consistently */
+  background: #eee;      /* fallback if no img */
 }
 
-/* Image fill */
-.cw-card img{
+.cw-card img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
 
-/* Reserved / creative slot (top-right for now) */
-.cw-slot--open{
+/* Reserved / creative slot */
+.cw-slot--open {
   display: grid;
   place-items: center;
   background:
@@ -750,7 +746,7 @@ footer{
   border: 1px dashed var(--hairline);
 }
 
-.cw-slot--open .cw-slot-label{
+.cw-slot--open .cw-slot-label {
   font-size: 0.9rem;
   font-weight: 600;
   opacity: 0.6;
@@ -760,21 +756,4 @@ footer{
   border-radius: 12px;
   background: #ffffffb8;
   backdrop-filter: blur(2px);
-}
-
-/* Subtle hover affordance for tiles (labels come later) */
-.cw-card::after{
-  content: "";
-  position: absolute; inset: 0;
-  background: rgba(0,0,0,0.05);
-  opacity: 0;
-  transition: opacity 160ms ease;
-  pointer-events: none;
-}
-.cw-card:hover::after{ opacity: .05; }
-
-/* Reduced motion: keep interactions instant */
-@media (prefers-reduced-motion: reduce){
-  .btn-cta-pink{ transition: none; }
-  .cw-card::after{ transition: none; }
 }
