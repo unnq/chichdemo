@@ -354,6 +354,7 @@ footer { border-top: 1px solid var(--hairline); }
 
 .ft-pitch {
   margin: 0;
+  font-size: 1.2rem;
   font-family: var(--font-sans);
   font-weight: 500;
   line-height: 1.35;
