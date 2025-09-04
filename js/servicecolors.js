@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     [palette[i], palette[j]] = [palette[j], palette[i]];
   }
 
-  const items = document.querySelectorAll('.services .service-item');
+  const items = document.querySelectorAll('.s-arrow');
   items.forEach((el, i) => {
     el.style.color = palette[i % palette.length];
   });
