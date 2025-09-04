@@ -224,6 +224,7 @@ nav .nav-right .btn-cta {
   font-family: 'Sono', monospace;
   font-size: 0.85rem;
   letter-spacing: -0.02rem;
+  padding: 1rem;
 }
 .hero-tagline .tag-left{ justify-self:start; opacity:0.8; }
 .hero-tagline .tag-center{ justify-self:center; font-weight:600; }
