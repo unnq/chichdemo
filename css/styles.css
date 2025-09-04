@@ -2,7 +2,7 @@
    Base + Design Tokens
    ========================= */
 :root{
-  --bg-light: #f2f1f0;           /* site background */
+  --bg-light: #f1f1f1;           /* site background */
   --text-dark: #2c2d2e;          /* body text */
   --g1:#8b5cf6; 
   --g2:#06b6d4; 
