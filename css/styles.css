@@ -368,6 +368,7 @@ footer { border-top: 1px solid var(--hairline); }
 
 /* Right box: three vertical lists */
 .ft-right {
+  background-color: var(--bg-light);
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(10px, 2vw, 20px);
