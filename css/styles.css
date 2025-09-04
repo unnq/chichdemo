@@ -2,7 +2,9 @@
    Base + Design Tokens
    ========================= */
 :root{
-  --bg-light: #f5fff5;           /* site background */
+  --bg-light: #fcfcfc;           /* site background */
+  --bg-ext: #f2f1f0
+     
   --text-dark: #2c2d2e;          /* body text */
   --g1:#8b5cf6; 
   --g2:#06b6d4; 
@@ -26,7 +28,7 @@
 html, body{
   margin:0;
   padding:0;
-  background:var(--bg-light);
+  background-color: var(--bg-ext);
   color:var(--text-dark);
   font-family: var(--font-sans);
   -webkit-font-smoothing:antialiased;
@@ -60,7 +62,7 @@ nav {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: var(--bg-light);
+  background-color: var(--bg-ext);
   border-bottom: 1px solid var(--hairline);
 }
 
@@ -72,6 +74,7 @@ nav {
   gap: 20px;
   padding-block: 12px;  /* adjust until it feels right */
   padding-inline: clamp(16px, 3vw, 28px);
+  background-color: var(--bg-light);
 }
 
 .nav-left{
@@ -195,6 +198,7 @@ nav .nav-right .btn-cta {
    Hero (grid with tagline)
    ========================= */
 .hero{
+  background-color: var(--bg-light);
   position: relative;
   min-height: 92vh;
   display: grid;
@@ -328,6 +332,7 @@ footer { border-top: 1px solid var(--hairline); }
 
 /* Top block: 1/3 — 2/3 split */
 .footer-top {
+  background-color: var(--bg-light);
   display: grid;
   grid-template-columns: 1fr 2fr;             /* 1/3 : 2/3 */
   gap: clamp(12px, 3vw, 28px);
@@ -415,6 +420,7 @@ footer { border-top: 1px solid var(--hairline); }
 
 /* Bottom row you already had */
 .footer-inner {
+  background-color: var(--bg-light);
   display:flex;
   justify-content:space-between;
   align-items:center;
@@ -678,6 +684,7 @@ footer { border-top: 1px solid var(--hairline); }
 
 /* Layout for label + grid split */
 .services-layout{
+  background-color: var(--bg-light);
   display: grid;
   grid-template-columns: 1fr 3fr;   /* 25% / 75% split */
 }
@@ -831,6 +838,7 @@ footer { border-top: 1px solid var(--hairline); }
 }
 
 .client-work-inner {
+  background-color: var(--bg-light);
   display: grid;
   gap: clamp(16px, 3vw, 28px);
   padding-block: clamp(18px, 3.5vw, 28px);
